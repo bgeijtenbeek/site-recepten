@@ -4,7 +4,7 @@ import { glob } from 'astro/loaders';
 import { makeRecipeSchema } from './lib/recipe-schema';
 
 const recipes = defineCollection({
-  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/data/recipes' }),
+  loader: glob({ pattern: '**/*.md', base: './src/data/recipes' }),
   schema: ({ image }) => makeRecipeSchema(image()),
 });
 

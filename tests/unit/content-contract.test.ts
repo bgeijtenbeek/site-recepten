@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { z } from 'zod';
 
-import { makeRecipeSchema, validateUniqueRecipeIds } from '../../src/lib/recipe-schema';
+import { makeRecipeSchema } from '../../src/lib/recipe-schema';
 
 const schema = makeRecipeSchema(z.string().min(1));
 
@@ -62,9 +62,5 @@ describe('recipe content contract', () => {
       ...completeRecipe,
       ingredients: [{ name: 'rijst', quantity, unit: 'g' }],
     })).toThrow(/hoeveelheid/i);
-  });
-
-  it('reports duplicate recipe IDs', () => {
-    expect(() => validateUniqueRecipeIds([{ id: 'soep' }, { id: 'soep' }])).toThrow(/soep/);
   });
 });

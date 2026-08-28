@@ -2,10 +2,10 @@
 import { getCollection } from 'astro:content';
 import RecipeDiscovery from '../components/RecipeDiscovery.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { MEAL_TYPES } from '../data/taxonomies';
+import { KENMERKEN, MEAL_TYPES } from '../data/taxonomies';
 import { toRecipeSummary } from '../lib/recipes';
 import { sortRecipesByTitle } from '../lib/sort';
-import { mealTypeUrl } from '../lib/urls';
+import { kenmerkUrl, mealTypeUrl } from '../lib/urls';
 
 const entries = await getCollection('recipes');
 const recipes = sortRecipesByTitle(entries.map(toRecipeSummary));
@@ -18,17 +18,30 @@ const recipes = sortRecipesByTitle(entries.map(toRecipeSummary));
     <p class="hero-copy">Zoek in onze favorieten, filter op wat er in huis is of laat je verrassen.</p>
   </section>
 
-  <RecipeDiscovery recipes={recipes} />
-
-  <nav class="category-section" aria-labelledby="meal-heading">
-    <div class="section-heading">
-      <p class="eyebrow">Blader op moment</p>
-      <h2 id="meal-heading">Maaltijdtypes</h2>
+  <RecipeDiscovery recipes={recipes}>
+    <div slot="categories" class="homepage-taxonomies">
+      <nav class="category-section" aria-labelledby="meal-heading">
+        <div class="section-heading">
+          <p class="eyebrow">Blader op moment</p>
+          <h2 id="meal-heading">Maaltijdtypes</h2>
+        </div>
+        <ul class="category-links">
+          {MEAL_TYPES.map(({ label, slug }) => (
+            <li><a href={mealTypeUrl(slug, import.meta.env.BASE_URL)}><span>{label}</span><span aria-hidden="true">→</span></a></li>
+          ))}
+        </ul>
+      </nav>
+      <nav class="category-section" aria-label="Blader op kenmerken">
+        <div class="section-heading">
+          <p class="eyebrow">Blader op ingrediënt of soort</p>
+          <h2>Kenmerken</h2>
+        </div>
+        <ul class="category-links category-links--compact">
+          {KENMERKEN.map(({ label, slug }) => (
+            <li><a href={kenmerkUrl(slug, import.meta.env.BASE_URL)}><span>{label}</span><span aria-hidden="true">→</span></a></li>
+          ))}
+        </ul>
+      </nav>
     </div>
-    <ul class="category-links">
-      {MEAL_TYPES.map(({ label, slug }) => (
-        <li><a href={mealTypeUrl(slug, import.meta.env.BASE_URL)}><span>{label}</span><span aria-hidden="true">→</span></a></li>
-      ))}
-    </ul>
-  </nav>
+  </RecipeDiscovery>
 </BaseLayout>

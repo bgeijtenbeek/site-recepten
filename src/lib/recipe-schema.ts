@@ -68,14 +68,4 @@ export function makeRecipeSchema<TImage extends z.ZodType>(imageSchema: TImage) 
   });
 }
 
-export function validateUniqueRecipeIds(entries: ReadonlyArray<{ id: string }>): void {
-  const seen = new Set<string>();
-  for (const { id } of entries) {
-    if (seen.has(id)) {
-      throw new Error(`Dubbele recept-ID: "${id}".`);
-    }
-    seen.add(id);
-  }
-}
-
 export type Ingredient = z.infer<typeof ingredientSchema>;

@@ -3,7 +3,6 @@ import { KENMERKEN } from '../data/taxonomies';
 import type { RecipeSummary } from '../lib/recipes';
 import { normalizeDutchText } from '../lib/search';
 import { selectInspiration } from '../lib/random';
-import { kenmerkUrl } from '../lib/urls';
 import EmptyState from './EmptyState.astro';
 import RecipeCard from './RecipeCard.astro';
 
@@ -21,7 +20,11 @@ const initialIds = new Set(selectInspiration(recipes, 10, () => 0.42).map(({ id 
         <input id="recipe-search" type="search" name="zoeken" placeholder="Bijvoorbeeld kikkererwten of pasta" autocomplete="off" />
       </div>
     </div>
+  </div>
 
+  <slot name="categories" />
+
+  <div data-enhancement-controls hidden>
     <fieldset class="filter-group">
       <legend>Filter op kenmerken</legend>
       <p class="filter-hint">Kies één of meer kenmerken; een recept moet aan alles voldoen.</p>
@@ -32,7 +35,6 @@ const initialIds = new Set(selectInspiration(recipes, 10, () => 0.42).map(({ id 
               <input type="checkbox" name="kenmerk" value={kenmerk.label} />
               <span>{kenmerk.label}</span>
             </label>
-            <a href={kenmerkUrl(kenmerk.slug, import.meta.env.BASE_URL)} aria-label={`Bekijk alle recepten met kenmerk ${kenmerk.label}`}>↗</a>
           </span>
         ))}
       </div>
@@ -72,7 +74,7 @@ const initialIds = new Set(selectInspiration(recipes, 10, () => 0.42).map(({ id 
   class RecipeDiscovery extends HTMLElement {
     connectedCallback() {
       const search = this.querySelector<HTMLInputElement>('input[type="search"]');
-      const controls = this.querySelector<HTMLElement>('[data-enhancement-controls]');
+      const controls = [...this.querySelectorAll<HTMLElement>('[data-enhancement-controls]')];
       const checks = [...this.querySelectorAll<HTMLInputElement>('input[name="kenmerk"]')];
       const checkRecords = checks.map((input) => ({ input, value: normalizeDutchText(input.value) }));
       const items = [...this.querySelectorAll<HTMLElement>('[data-recipe-id]')];
@@ -82,8 +84,8 @@ const initialIds = new Set(selectInspiration(recipes, 10, () => 0.42).map(({ id 
       const clear = this.querySelector<HTMLButtonElement>('[data-clear]');
       const title = this.querySelector<HTMLElement>('[data-section-title]');
       const kicker = this.querySelector<HTMLElement>('[data-section-kicker]');
-      if (!search || !controls || !grid || !status || !empty || !clear || !title || !kicker) return;
-      controls.hidden = false;
+      if (!search || controls.length === 0 || !grid || !status || !empty || !clear || !title || !kicker) return;
+      for (const control of controls) control.hidden = false;
 
       const records = items.map((element) => ({
         element,

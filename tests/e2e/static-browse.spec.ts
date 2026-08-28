@@ -8,6 +8,11 @@ test.describe('statische ervaring zonder JavaScript', () => {
     await expect(page.getByRole('heading', { name: 'Wat eten we vandaag?' })).toBeVisible();
     await expect(page.locator('[data-recipe-id]:visible')).toHaveCount(10);
 
+    const kenmerken = page.getByRole('navigation', { name: 'Blader op kenmerken' });
+    await kenmerken.getByRole('link', { name: 'Kip', exact: true }).click();
+    await expect(page.getByRole('heading', { name: 'Kip', level: 1 })).toBeVisible();
+
+    await page.goto('./');
     await page.getByRole('link', { name: 'Hoofdgerechten' }).click();
     await expect(page.getByRole('heading', { name: 'Hoofdgerechten', level: 1 })).toBeVisible();
     const titles = await page.locator('.card-title').allTextContents();
