@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import TaxonomyListing from '../../components/TaxonomyListing.astro';
+import { KENMERKEN } from '../../data/taxonomies';
+import { recipesForKenmerk, toRecipeSummary } from '../../lib/recipes';
+import { sortRecipesByTitle } from '../../lib/sort';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('recipes');
+  const recipes = entries.map(toRecipeSummary);
+  return KENMERKEN.map((kenmerk) => ({
+    params: { slug: kenmerk.slug },
+    props: { kenmerk, recipes: sortRecipesByTitle(recipesForKenmerk(recipes, kenmerk.label)) },
+  }));
+}
+
+const { kenmerk, recipes } = Astro.props;
+---
+
+<TaxonomyListing
+  label={kenmerk.label}
+  kind="Kenmerk"
+  description={`Alle familierecepten met het kenmerk ${kenmerk.label}.`}
+  emptyMessage={`We hebben nog geen recepten met het kenmerk ${kenmerk.label}.`}
+  recipes={recipes}
+/>

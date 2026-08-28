@@ -1,0 +1,61 @@
+---
+import type { Ingredient } from '../lib/recipe-schema';
+
+interface Props { ingredients: Ingredient[] }
+const { ingredients } = Astro.props;
+---
+
+<serving-scaler class="serving-scaler">
+  <div class="serving-toolbar">
+    <div>
+      <p class="eyebrow">Pas hoeveelheden aan</p>
+      <h2>Ingrediënten</h2>
+    </div>
+    <div class="stepper" aria-label="Aantal personen">
+      <button type="button" data-decrease aria-label="Eén persoon minder">−</button>
+      <output data-count aria-live="polite" aria-atomic="true">4 personen</output>
+      <button type="button" data-increase aria-label="Eén persoon meer">+</button>
+    </div>
+  </div>
+  <ul class="ingredient-list">
+    {ingredients.map((ingredient) => (
+      <li>
+        <span class="ingredient-amount">
+          {'quantity' in ingredient && ingredient.quantity ? (
+            <><span data-quantity={ingredient.quantity}>{ingredient.quantity}</span>{ingredient.unit ? ` ${ingredient.unit}` : ''}</>
+          ) : (
+            <span>{'amount' in ingredient ? ingredient.amount : ''}</span>
+          )}
+        </span>
+        <span>{ingredient.name}</span>
+      </li>
+    ))}
+  </ul>
+</serving-scaler>
+
+<script>
+  import { scaleQuantity } from '../lib/quantities';
+
+  class ServingScaler extends HTMLElement {
+    connectedCallback() {
+      const decrease = this.querySelector<HTMLButtonElement>('[data-decrease]');
+      const increase = this.querySelector<HTMLButtonElement>('[data-increase]');
+      const output = this.querySelector<HTMLOutputElement>('[data-count]');
+      const quantities = [...this.querySelectorAll<HTMLElement>('[data-quantity]')];
+      if (!decrease || !increase || !output) return;
+      let servings = 4;
+      const render = () => {
+        output.textContent = `${servings} ${servings === 1 ? 'persoon' : 'personen'}`;
+        decrease.disabled = servings === 1;
+        increase.disabled = servings === 12;
+        for (const quantity of quantities) {
+          quantity.textContent = scaleQuantity(quantity.dataset.quantity ?? '', servings);
+        }
+      };
+      decrease.addEventListener('click', () => { servings = Math.max(1, servings - 1); render(); });
+      increase.addEventListener('click', () => { servings = Math.min(12, servings + 1); render(); });
+      render();
+    }
+  }
+  if (!customElements.get('serving-scaler')) customElements.define('serving-scaler', ServingScaler);
+</script>

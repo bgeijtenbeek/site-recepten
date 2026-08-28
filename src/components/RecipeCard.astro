@@ -1,0 +1,30 @@
+---
+import type { ImageMetadata } from 'astro';
+import type { RecipeSummary } from '../lib/recipes';
+import { recipeUrl } from '../lib/urls';
+import RecipeImage from './RecipeImage.astro';
+
+interface Props {
+  recipe: RecipeSummary;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { recipe, headingLevel = 'h2' } = Astro.props;
+const Heading = headingLevel;
+const href = recipeUrl(recipe.id, import.meta.env.BASE_URL);
+---
+
+<article class="recipe-card">
+  <a class="card-image-link" href={href} tabindex="-1" aria-hidden="true">
+    <RecipeImage image={recipe.image as ImageMetadata | undefined} alt={recipe.imageAlt} />
+  </a>
+  <div class="card-body">
+    <p class="eyebrow">{recipe.mealType}</p>
+    <Heading class="card-title"><a href={href}>{recipe.title}</a></Heading>
+    <p class="card-description">{recipe.description}</p>
+    <dl class="card-meta" aria-label="Receptinformatie">
+      <div><dt class="sr-only">Totale tijd</dt><dd>{recipe.prepTime + recipe.cookTime} min</dd></div>
+      <div><dt class="sr-only">Moeilijkheid</dt><dd>{recipe.difficulty}</dd></div>
+    </dl>
+  </div>
+</article>

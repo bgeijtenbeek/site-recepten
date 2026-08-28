@@ -1,0 +1,63 @@
+---
+import { getCollection } from 'astro:content';
+import type { ImageMetadata } from 'astro';
+import RecipeImage from '../../components/RecipeImage.astro';
+import ServingScaler from '../../components/ServingScaler.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { KENMERKEN, MEAL_TYPES } from '../../data/taxonomies';
+import { kenmerkUrl, mealTypeUrl, withBase } from '../../lib/urls';
+
+export async function getStaticPaths() {
+  const recipes = await getCollection('recipes');
+  return recipes.map((recipe) => ({ params: { id: recipe.id }, props: { recipe } }));
+}
+
+const { recipe } = Astro.props;
+const { data } = recipe;
+const meal = MEAL_TYPES.find(({ label }) => label === data.mealType)!;
+const kenmerken = data.kenmerken.map((label: string) => KENMERKEN.find((item) => item.label === label)!);
+const homeUrl = withBase('', import.meta.env.BASE_URL);
+---
+
+<BaseLayout title={data.title} description={data.description}>
+  <nav class="breadcrumbs" aria-label="Kruimelpad">
+    <a href={homeUrl}>Recepten</a><span aria-hidden="true">/</span><span aria-current="page">{data.title}</span>
+  </nav>
+  <article class="recipe-detail">
+    <header class="recipe-intro">
+      <div>
+        <a class="eyebrow eyebrow-link" href={mealTypeUrl(meal.slug, import.meta.env.BASE_URL)}>{data.mealType}</a>
+        <h1>{data.title}</h1>
+        <p class="recipe-lead">{data.description}</p>
+        <dl class="recipe-facts">
+          <div><dt>Voorbereiden</dt><dd>{data.prepTime} min</dd></div>
+          <div><dt>Bereiden</dt><dd>{data.cookTime} min</dd></div>
+          <div><dt>Moeilijkheid</dt><dd>{data.difficulty}</dd></div>
+        </dl>
+        {kenmerken.length > 0 && (
+          <div class="tag-list" aria-label="Kenmerken">
+            {kenmerken.map(({ label, slug }) => <a href={kenmerkUrl(slug, import.meta.env.BASE_URL)}>{label}</a>)}
+          </div>
+        )}
+      </div>
+      <RecipeImage image={data.image as ImageMetadata | undefined} alt={data.imageAlt} priority />
+    </header>
+
+    <div class="recipe-columns">
+      <ServingScaler ingredients={data.ingredients} />
+      <section class="method" aria-labelledby="method-heading">
+        <p class="eyebrow">Stap voor stap</p>
+        <h2 id="method-heading">Bereiding</h2>
+        <ol>
+          {data.steps.map((step: string) => <li><span>{step}</span></li>)}
+        </ol>
+        {data.notes && (
+          <aside class="recipe-note" aria-labelledby="note-heading">
+            <h3 id="note-heading">Goed om te weten</h3>
+            <p>{data.notes}</p>
+          </aside>
+        )}
+      </section>
+    </div>
+  </article>
+</BaseLayout>

@@ -1,0 +1,20 @@
+---
+interface Props {
+  title?: string;
+  message?: string;
+  hidden?: boolean;
+  'data-empty'?: boolean | string;
+}
+
+const {
+  title = 'Nog geen recepten',
+  message = 'In deze verzameling staat op dit moment nog niets.',
+  ...attributes
+} = Astro.props;
+---
+
+<div class="empty-state" {...attributes}>
+  <span class="empty-state-icon" aria-hidden="true">✦</span>
+  <h2>{title}</h2>
+  <p>{message}</p>
+</div>

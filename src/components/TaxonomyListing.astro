@@ -1,0 +1,37 @@
+---
+import type { RecipeSummary } from '../lib/recipes';
+import { withBase } from '../lib/urls';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EmptyState from './EmptyState.astro';
+import RecipeCard from './RecipeCard.astro';
+
+interface Props {
+  label: string;
+  kind: 'Maaltijdtype' | 'Kenmerk';
+  description: string;
+  emptyMessage: string;
+  recipes: RecipeSummary[];
+}
+
+const { label, kind, description, emptyMessage, recipes } = Astro.props;
+---
+
+<BaseLayout title={label} description={description}>
+  <nav class="breadcrumbs" aria-label="Kruimelpad">
+    <a href={withBase('', import.meta.env.BASE_URL)}>Recepten</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">{label}</span>
+  </nav>
+  <header class="listing-header">
+    <p class="eyebrow">{kind}</p>
+    <h1>{label}</h1>
+    <p>{recipes.length} {recipes.length === 1 ? 'recept' : 'recepten'}, alfabetisch gerangschikt.</p>
+  </header>
+  {recipes.length > 0 ? (
+    <div class="recipe-grid listing-grid">
+      {recipes.map((recipe) => <RecipeCard recipe={recipe} />)}
+    </div>
+  ) : (
+    <EmptyState message={emptyMessage} />
+  )}
+</BaseLayout>

@@ -1,0 +1,26 @@
+---
+import { getCollection } from 'astro:content';
+import TaxonomyListing from '../../components/TaxonomyListing.astro';
+import { MEAL_TYPES } from '../../data/taxonomies';
+import { recipesForMealType, toRecipeSummary } from '../../lib/recipes';
+import { sortRecipesByTitle } from '../../lib/sort';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('recipes');
+  const recipes = entries.map(toRecipeSummary);
+  return MEAL_TYPES.map((mealType) => ({
+    params: { slug: mealType.slug },
+    props: { mealType, recipes: sortRecipesByTitle(recipesForMealType(recipes, mealType.label)) },
+  }));
+}
+
+const { mealType, recipes } = Astro.props;
+---
+
+<TaxonomyListing
+  label={mealType.label}
+  kind="Maaltijdtype"
+  description={`Alle familierecepten voor ${mealType.label.toLocaleLowerCase('nl-NL')}.`}
+  emptyMessage={`We hebben nog geen recepten toegevoegd aan ${mealType.label}.`}
+  recipes={recipes}
+/>

@@ -1,0 +1,47 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  image?: ImageMetadata;
+  alt?: string;
+  priority?: boolean;
+  class?: string;
+}
+
+const { image, alt = '', priority = false, class: className = '' } = Astro.props;
+const isVector = image?.format === 'svg';
+---
+
+<div class:list={['recipe-image', className, { 'recipe-image--fallback': !image }] }>
+  {image && isVector ? (
+    <img
+      src={image.src}
+      alt={alt}
+      width={image.width}
+      height={image.height}
+      loading={priority ? 'eager' : 'lazy'}
+      fetchpriority={priority ? 'high' : 'auto'}
+      decoding="async"
+    />
+  ) : image ? (
+    <Image
+      src={image}
+      alt={alt}
+      widths={[480, 720, 1080]}
+      sizes="(min-width: 48rem) 40rem, 100vw"
+      loading={priority ? 'eager' : 'lazy'}
+      fetchpriority={priority ? 'high' : 'auto'}
+      decoding="async"
+    />
+  ) : (
+    <div class="fallback-art" role="img" aria-label="Geen foto beschikbaar">
+      <svg viewBox="0 0 320 200" aria-hidden="true" focusable="false">
+        <path d="M75 128c8 35 39 55 85 55s77-20 85-55H75Z" fill="currentColor" opacity=".22" />
+        <path d="M59 118h202c0 15-10 24-27 24H86c-17 0-27-9-27-24Z" fill="currentColor" opacity=".48" />
+        <path d="M118 91c-14-17 13-28 0-47M159 91c-14-17 13-28 0-47M200 91c-14-17 13-28 0-47" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="8" opacity=".35" />
+      </svg>
+      <span>Foto volgt</span>
+    </div>
+  )}
+</div>

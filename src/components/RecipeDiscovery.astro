@@ -1,0 +1,139 @@
+---
+import { KENMERKEN } from '../data/taxonomies';
+import type { RecipeSummary } from '../lib/recipes';
+import { normalizeDutchText } from '../lib/search';
+import { selectInspiration } from '../lib/random';
+import { kenmerkUrl } from '../lib/urls';
+import EmptyState from './EmptyState.astro';
+import RecipeCard from './RecipeCard.astro';
+
+interface Props { recipes: RecipeSummary[] }
+const { recipes } = Astro.props;
+const initialIds = new Set(selectInspiration(recipes, 10, () => 0.42).map(({ id }) => id));
+---
+
+<recipe-discovery class="discovery" data-limit="10">
+  <div data-enhancement-controls hidden>
+    <div class="search-wrap">
+      <label for="recipe-search">Zoek een recept</label>
+      <div class="search-field">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z" /></svg>
+        <input id="recipe-search" type="search" name="zoeken" placeholder="Bijvoorbeeld kikkererwten of pasta" autocomplete="off" />
+      </div>
+    </div>
+
+    <fieldset class="filter-group">
+      <legend>Filter op kenmerken</legend>
+      <p class="filter-hint">Kies één of meer kenmerken; een recept moet aan alles voldoen.</p>
+      <div class="filter-chips">
+        {KENMERKEN.map((kenmerk) => (
+          <span class="filter-chip-wrap">
+            <label class="filter-chip">
+              <input type="checkbox" name="kenmerk" value={kenmerk.label} />
+              <span>{kenmerk.label}</span>
+            </label>
+            <a href={kenmerkUrl(kenmerk.slug, import.meta.env.BASE_URL)} aria-label={`Bekijk alle recepten met kenmerk ${kenmerk.label}`}>↗</a>
+          </span>
+        ))}
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="results-heading">
+    <div>
+      <p class="eyebrow" data-section-kicker>Een greep uit de verzameling</p>
+      <h2 data-section-title>Waar hebben we trek in?</h2>
+    </div>
+    <button class="text-button" type="button" data-clear hidden>Wis zoeken en filters</button>
+  </div>
+  <p class="result-status" data-status aria-live="polite">{initialIds.size} recepten ter inspiratie</p>
+
+  <div class="recipe-grid" data-grid>
+    {recipes.map((recipe) => (
+      <div
+        class="discovery-item"
+        data-recipe-id={recipe.id}
+        data-search={normalizeDutchText([recipe.title, recipe.description, ...recipe.ingredientNames].join(' '))}
+        data-kenmerken={recipe.kenmerken.map(normalizeDutchText).join('|')}
+        data-meal-type={recipe.mealType}
+        hidden={!initialIds.has(recipe.id)}
+      >
+        <RecipeCard recipe={recipe} headingLevel="h3" />
+      </div>
+    ))}
+  </div>
+  <EmptyState data-empty hidden title="Geen recepten gevonden" message="Probeer een andere zoekterm of haal een filter weg." />
+</recipe-discovery>
+
+<script>
+  import { matchesDiscovery, normalizeDutchText, queryTerms } from '../lib/search';
+  import { selectInspiration } from '../lib/random';
+
+  class RecipeDiscovery extends HTMLElement {
+    connectedCallback() {
+      const search = this.querySelector<HTMLInputElement>('input[type="search"]');
+      const controls = this.querySelector<HTMLElement>('[data-enhancement-controls]');
+      const checks = [...this.querySelectorAll<HTMLInputElement>('input[name="kenmerk"]')];
+      const checkRecords = checks.map((input) => ({ input, value: normalizeDutchText(input.value) }));
+      const items = [...this.querySelectorAll<HTMLElement>('[data-recipe-id]')];
+      const grid = this.querySelector<HTMLElement>('[data-grid]');
+      const status = this.querySelector<HTMLElement>('[data-status]');
+      const empty = this.querySelector<HTMLElement>('[data-empty]');
+      const clear = this.querySelector<HTMLButtonElement>('[data-clear]');
+      const title = this.querySelector<HTMLElement>('[data-section-title]');
+      const kicker = this.querySelector<HTMLElement>('[data-section-kicker]');
+      if (!search || !controls || !grid || !status || !empty || !clear || !title || !kicker) return;
+      controls.hidden = false;
+
+      const records = items.map((element) => ({
+        element,
+        mealType: element.dataset.mealType ?? '',
+        searchableText: element.dataset.search ?? '',
+        kenmerken: new Set((element.dataset.kenmerken ?? '').split('|').filter(Boolean)),
+      }));
+      const limit = Number(this.dataset.limit ?? 10);
+      const randomValues = new Uint32Array(Math.min(limit, records.length) || 1);
+      crypto.getRandomValues(randomValues);
+      let randomIndex = 0;
+      const inspiration = selectInspiration(records, limit, () => {
+        const value = randomValues[randomIndex++ % randomValues.length];
+        return value / 4294967296;
+      }).map(({ element }) => element);
+
+      const render = () => {
+        const terms = queryTerms(search.value);
+        const selected = checkRecords.filter(({ input }) => input.checked).map(({ value }) => value);
+        const active = terms.length > 0 || selected.length > 0;
+        const visible = active
+          ? records
+              .filter(({ searchableText, kenmerken }) => matchesDiscovery(searchableText, kenmerken, terms, selected))
+              .map(({ element }) => element)
+          : inspiration;
+        const visibleSet = new Set(visible);
+
+        for (const item of items) item.hidden = !visibleSet.has(item);
+        for (const item of visible) grid.append(item);
+        empty.hidden = visible.length > 0;
+        grid.hidden = visible.length === 0;
+        clear.hidden = !active;
+        kicker.textContent = active ? 'Zoekresultaten' : 'Een greep uit de verzameling';
+        title.textContent = active ? 'Dit past bij je keuze' : 'Waar hebben we trek in?';
+        status.textContent = active
+          ? `${visible.length} ${visible.length === 1 ? 'recept' : 'recepten'} gevonden`
+          : `${visible.length} recepten ter inspiratie`;
+      };
+
+      search.addEventListener('input', render);
+      for (const check of checks) check.addEventListener('change', render);
+      clear.addEventListener('click', () => {
+        search.value = '';
+        for (const check of checks) check.checked = false;
+        render();
+        search.focus();
+      });
+      render();
+    }
+  }
+
+  if (!customElements.get('recipe-discovery')) customElements.define('recipe-discovery', RecipeDiscovery);
+</script>

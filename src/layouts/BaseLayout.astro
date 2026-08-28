@@ -1,0 +1,47 @@
+---
+import { withBase } from '../lib/urls';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Familierecepten',
+  description = 'Een compacte verzameling van onze favoriete familierecepten.',
+} = Astro.props;
+const pageTitle = title === 'Familierecepten' ? title : `${title} · Familierecepten`;
+const homeUrl = withBase('', import.meta.env.BASE_URL);
+const faviconUrl = withBase('favicon.svg', import.meta.env.BASE_URL);
+---
+
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f7f4ed" />
+    <link rel="icon" type="image/svg+xml" href={faviconUrl} />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#inhoud">Ga naar de inhoud</a>
+    <header class="site-header">
+      <div class="page-shell header-inner">
+        <a class="wordmark" href={homeUrl} aria-label="Familierecepten, naar de startpagina">
+          <span aria-hidden="true">FR</span>
+          <strong>Familierecepten</strong>
+        </a>
+        <span class="header-note">Voor aan onze tafel</span>
+      </div>
+    </header>
+    <main id="inhoud" class="page-shell">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="page-shell">Met zorg verzameld voor familie en vrienden.</div>
+    </footer>
+  </body>
+</html>

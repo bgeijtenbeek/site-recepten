@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title description">
+  <title id="title">Kip-kerrie met rijst</title>
+  <desc id="description">Een illustratieve schaal met rijst, kip en paprika.</desc>
+  <rect width="1200" height="800" fill="#f0e3c4"/>
+  <ellipse cx="600" cy="430" rx="390" ry="250" fill="#fffaf0" stroke="#315b45" stroke-width="22"/>
+  <path d="M350 420c80-150 420-190 520 20-140 160-390 180-520-20Z" fill="#d49a3a"/>
+  <g fill="#f7f0d5">
+    <circle cx="450" cy="360" r="58"/><circle cx="575" cy="330" r="64"/><circle cx="700" cy="365" r="54"/>
+  </g>
+  <g fill="#b94837">
+    <rect x="470" y="450" width="90" height="75" rx="18"/><rect x="650" y="430" width="105" height="82" rx="20"/>
+  </g>
+</svg>

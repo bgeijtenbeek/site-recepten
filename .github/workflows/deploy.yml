@@ -1,0 +1,42 @@
+name: Publiceer op GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      SITE_URL: https://${{ github.repository_owner }}.github.io
+      SITE_BASE: ${{ github.event.repository.name == format('{0}.github.io', github.repository_owner) && '/' || format('/{0}', github.event.repository.name) }}
+    steps:
+      - name: Haal de broncode op
+        uses: actions/checkout@v5
+      - name: Bouw en upload de statische website
+        uses: withastro/action@v5
+        with:
+          node-version: 24
+          package-manager: pnpm@11.19.0
+          build-cmd: pnpm check && pnpm test:unit && pnpm build
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Publiceer op GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
