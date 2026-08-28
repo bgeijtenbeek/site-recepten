@@ -4,21 +4,21 @@ Een compacte, Nederlandstalige receptenwebsite voor de familie. Astro bouwt alle
 
 ## Lokaal starten
 
-Dit project gebruikt Node.js 24 en pnpm 11.
+Dit project gebruikt Node.js 24 en npm 11.
 
 ```powershell
-pnpm install
-pnpm dev
+npm install
+npm run dev
 ```
 
 Open daarna de URL die Astro in de terminal toont. Handige opdrachten:
 
-- `pnpm dev` start de lokale ontwikkelserver.
-- `pnpm check` controleert Astro, TypeScript en alle receptbestanden.
-- `pnpm test:unit` test hoeveelheden, zoeken, sorteren en URL's.
-- `pnpm build` maakt de statische website in `dist/`.
-- `pnpm test:e2e` bouwt met het testpad `/site-recepten/` en test de website in echte browsers.
-- `pnpm validate` voert alle controles achter elkaar uit.
+- `npm run dev` start de lokale ontwikkelserver.
+- `npm run check` controleert Astro, TypeScript en alle receptbestanden.
+- `npm run test:unit` test hoeveelheden, zoeken, sorteren en URL's.
+- `npm run build` maakt de statische website in `dist/`.
+- `npm run test:e2e` bouwt met het testpad `/site-recepten/` en test de website in echte browsers.
+- `npm run validate` voert alle controles achter elkaar uit.
 
 ## Een recept toevoegen
 
@@ -72,7 +72,7 @@ Een afbeelding is optioneel. Zonder `image` toont de website automatisch dezelfd
 
 ## Categorieën beheren
 
-Ieder recept heeft precies één `mealType` en mag meerdere `kenmerken` hebben. De toegestane waarden en URL-slugs staan centraal in `src/data/taxonomies.ts`. Voeg een nieuwe categorie daar één keer toe; Astro maakt de categoriepagina vervolgens automatisch. Voer daarna `pnpm check` uit om alle recepten te controleren.
+Ieder recept heeft precies één `mealType` en mag meerdere `kenmerken` hebben. De toegestane waarden en URL-slugs staan centraal in `src/data/taxonomies.ts`. Voeg een nieuwe categorie daar één keer toe; Astro maakt de categoriepagina vervolgens automatisch. Voer daarna `npm run check` uit om alle recepten te controleren.
 
 ## Publiceren op GitHub Pages
 
@@ -86,5 +86,5 @@ De workflow haalt het domein en repositorypad rechtstreeks uit GitHub Pages. Daa
 Voer voor iedere publicatie bij voorkeur lokaal uit:
 
 ```powershell
-pnpm validate
+npm run validate
 ```

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@11.19.0",
+  "packageManager": "npm@11.6.2",
   "engines": {
     "node": ">=24.0.0"
   },
@@ -15,7 +15,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "test:e2e": "playwright test",
-    "validate": "pnpm check && pnpm test:unit && pnpm build && pnpm test:e2e"
+    "validate": "astro check && vitest run && astro build && playwright test"
   },
   "dependencies": {
     "astro": "7.2.9",

@@ -27,8 +27,8 @@ jobs:
         uses: withastro/action@v5
         with:
           node-version: 24
-          package-manager: pnpm@11.19.0
-          build-cmd: pnpm check && pnpm test:unit && pnpm build
+          package-manager: npm@11.6.2
+          build-cmd: npm run check && npm run test:unit && npm run build
 
   deploy:
     environment:

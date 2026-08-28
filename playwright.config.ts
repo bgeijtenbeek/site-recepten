@@ -14,7 +14,7 @@ export default defineConfig({
     { name: 'mobile', use: { ...devices['Pixel 7'] } },
   ],
   webServer: {
-    command: 'pnpm build && node tests/e2e/serve-preview.mjs',
+    command: 'astro build && node tests/e2e/serve-preview.mjs',
     env: {
       SITE_URL: 'http://127.0.0.1:4321',
       SITE_BASE: basePath,
