@@ -5,9 +5,7 @@ image: ../../assets/recipes/kip-kerrie.svg
 imageAlt: Een schaal met kip-kerrie, rijst en paprika
 mealType: Hoofdgerechten
 kenmerken: [Kip, Rijst]
-prepTime: 15
-cookTime: 25
-difficulty: Makkelijk
+totalTime: 40
 servings: 4
 ingredients:
   - { name: kipfilet, quantity: "500", unit: g }

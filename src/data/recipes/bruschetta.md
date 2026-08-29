@@ -3,9 +3,7 @@ title: Bruschetta met basilicum
 description: Knapperig brood met sappige tomaat, knoflook en basilicum.
 mealType: Voorgerechten
 kenmerken: [Vega]
-prepTime: 15
-cookTime: 8
-difficulty: Makkelijk
+totalTime: 23
 servings: 4
 ingredients:
   - { name: plakken ciabatta, quantity: "8" }

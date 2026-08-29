@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test';
 test('serves the Dutch shell below the project path', async ({ page }) => {
   await page.goto('./');
 
-  await expect(page).toHaveTitle('GOAT-recepten');
+  await expect(page).toHaveTitle('Fam. Geijtenbeek - Recepten');
   await expect(page.getByLabel('Zoek een recept')).toBeVisible();
   await expect(page.locator('html')).toHaveAttribute('lang', 'nl');
   await expect(page).toHaveURL(/\/site-recepten\/$/);

@@ -20,11 +20,8 @@ export const KENMERKEN = [
   { label: 'Ovengerecht', slug: 'ovengerecht' },
 ] as const;
 
-export const DIFFICULTIES = ['Makkelijk', 'Gemiddeld', 'Moeilijk'] as const;
-
 export type MealType = (typeof MEAL_TYPES)[number]['label'];
 export type Kenmerk = (typeof KENMERKEN)[number]['label'];
-export type Difficulty = (typeof DIFFICULTIES)[number];
 
 export const mealTypeLabels = MEAL_TYPES.map(({ label }) => label) as [MealType, ...MealType[]];
 export const kenmerkLabels = KENMERKEN.map(({ label }) => label) as [Kenmerk, ...Kenmerk[]];

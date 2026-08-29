@@ -31,6 +31,10 @@ test.describe('statische ervaring zonder JavaScript', () => {
     expect(titles).toEqual([...titles].sort((a, b) => a.localeCompare(b, 'nl-NL')));
 
     await page.getByRole('link', { name: 'Kip-kerrie met rijst' }).click();
+    await expect(page.getByText('Totale kooktijd', { exact: true })).toBeVisible();
+    await expect(page.getByText('40 min', { exact: true })).toBeVisible();
+    await expect(page.getByText('Voorbereiden', { exact: true })).toHaveCount(0);
+    await expect(page.getByText('Moeilijkheid', { exact: true })).toHaveCount(0);
     await expect(page.getByRole('heading', { name: 'Ingrediënten' })).toBeVisible();
     await expect(page.getByText('4 personen')).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Bereiding' })).toBeVisible();
@@ -58,10 +62,7 @@ for (const width of [360, 768, 1280]) {
         expect(Math.abs(contentWidths[0] - contentWidths[1])).toBeLessThan(1);
         const columns = await page.locator('[data-grid]').evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(' ').length);
         expect(columns).toBe(3);
-        const metadataLeftEdges = await page.locator('.recipe-card').first().locator('.card-meta dd').evaluateAll((items) =>
-          items.map((item) => item.getBoundingClientRect().left),
-        );
-        expect(Math.abs(metadataLeftEdges[0] - metadataLeftEdges[1])).toBeLessThan(1);
+        await expect(page.locator('.recipe-card').first().locator('.card-meta dd')).toHaveCount(1);
       }
     }
   });

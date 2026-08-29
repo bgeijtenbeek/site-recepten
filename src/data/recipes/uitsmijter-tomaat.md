@@ -3,9 +3,7 @@ title: Uitsmijter met tomaat
 description: Een eenvoudige lunch met gebakken ei, tomaat en volkorenbrood.
 mealType: Ontbijt/Lunch
 kenmerken: [Vega, Ei]
-prepTime: 5
-cookTime: 8
-difficulty: Makkelijk
+totalTime: 13
 servings: 4
 ingredients:
   - { name: eieren, quantity: "8" }

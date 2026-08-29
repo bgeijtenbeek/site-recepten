@@ -3,9 +3,7 @@ title: Aardappelgratin
 description: Romige laagjes aardappel met knoflook en een krokante kaaskorst.
 mealType: Overig
 kenmerken: [Vega, Aardappel, Ovengerecht]
-prepTime: 20
-cookTime: 50
-difficulty: Gemiddeld
+totalTime: 70
 servings: 4
 ingredients:
   - { name: vastkokende aardappels, quantity: "800", unit: g }

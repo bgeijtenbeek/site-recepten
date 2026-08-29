@@ -3,9 +3,7 @@ title: Frisse rijstsalade
 description: Lichte salade met rijst, komkommer, erwtjes en citroen.
 mealType: Overig
 kenmerken: [Vega, Rijst]
-prepTime: 15
-cookTime: 12
-difficulty: Makkelijk
+totalTime: 27
 servings: 4
 ingredients:
   - { name: rijst, quantity: "250", unit: g }

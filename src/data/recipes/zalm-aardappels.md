@@ -3,9 +3,7 @@ title: Zalm met krieltjes uit de oven
 description: Een complete ovenschotel met zalm, krieltjes en sperziebonen.
 mealType: Hoofdgerechten
 kenmerken: [Vis, Aardappel, Ovengerecht]
-prepTime: 15
-cookTime: 30
-difficulty: Makkelijk
+totalTime: 45
 servings: 4
 ingredients:
   - { name: zalmfilets, quantity: "4" }

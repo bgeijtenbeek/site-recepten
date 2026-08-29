@@ -30,9 +30,7 @@ const homeUrl = withBase('', import.meta.env.BASE_URL);
         <h1>{data.title}</h1>
         <p class="recipe-lead">{data.description}</p>
         <dl class="recipe-facts">
-          <div><dt>Voorbereiden</dt><dd>{data.prepTime} min</dd></div>
-          <div><dt>Bereiden</dt><dd>{data.cookTime} min</dd></div>
-          <div><dt>Moeilijkheid</dt><dd>{data.difficulty}</dd></div>
+          <div><dt>Totale kooktijd</dt><dd>{data.totalTime} min</dd></div>
         </dl>
         {kenmerken.length > 0 && (
           <div class="tag-list" aria-label="Kenmerken">

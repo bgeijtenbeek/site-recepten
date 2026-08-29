@@ -3,9 +3,7 @@ title: Vegetarische groentelasagne
 description: Comfortabele lasagne met courgette, spinazie en tomatensaus.
 mealType: Hoofdgerechten
 kenmerken: [Vega, Pasta, Ovengerecht]
-prepTime: 25
-cookTime: 40
-difficulty: Gemiddeld
+totalTime: 65
 servings: 4
 ingredients:
   - { name: lasagnebladen, quantity: "12" }

@@ -3,9 +3,7 @@ title: Appel-havermout met kaneel
 description: Warme havermout met appel, kaneel en een klein beetje honing.
 mealType: Ontbijt/Lunch
 kenmerken: [Vega, Zoet]
-prepTime: 5
-cookTime: 10
-difficulty: Makkelijk
+totalTime: 15
 servings: 4
 ingredients:
   - { name: havermout, quantity: "200", unit: g }

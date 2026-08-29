@@ -12,9 +12,7 @@ const completeRecipe = {
   imageAlt: 'Een schaal met kip en rijst',
   mealType: 'Hoofdgerechten',
   kenmerken: ['Kip', 'Rijst'],
-  prepTime: 15,
-  cookTime: 25,
-  difficulty: 'Makkelijk',
+  totalTime: 40,
   servings: 4,
   ingredients: [
     { name: 'rijst', quantity: '300', unit: 'g' },

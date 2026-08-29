@@ -3,9 +3,7 @@ title: Appelcrumble
 description: Warme appel onder een krokant laagje van haver en kaneel.
 mealType: Desserts
 kenmerken: [Vega, Zoet, Ovengerecht]
-prepTime: 15
-cookTime: 35
-difficulty: Makkelijk
+totalTime: 50
 servings: 4
 ingredients:
   - { name: appels, quantity: "4" }

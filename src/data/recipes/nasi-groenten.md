@@ -3,9 +3,7 @@ title: Nasi met groenten en ei
 description: Gebakken rijst met knapperige groenten en een zacht gebakken ei.
 mealType: Hoofdgerechten
 kenmerken: [Vega, Rijst, Ei]
-prepTime: 15
-cookTime: 20
-difficulty: Makkelijk
+totalTime: 35
 servings: 4
 ingredients:
   - { name: rijst, quantity: "300", unit: g }

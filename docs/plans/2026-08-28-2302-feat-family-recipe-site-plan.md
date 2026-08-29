@@ -64,7 +64,7 @@ The collection also needs a maintainable way to grow without introducing a CMS o
 - R1. The complete user interface and recipe labels must be in Dutch and must render as a modern, restrained, mobile-first experience.
 - R2. The published result must be static HTML, CSS, images, and client-side JavaScript that behaves consistently in local development and on GitHub Pages, including deployment below a repository path.
 - R3. Astro must generate the site without a CMS, application backend, database, user account, or sign-in flow.
-- R4. Each recipe must live in a separate maintainer-editable source file and contain a title, short description, optional image, one meal type, zero or more Kenmerken, preparation time, cooking time, difficulty, ingredients, preparation steps, and optional notes.
+- R4. Each recipe must live in a separate maintainer-editable source file and contain a title, short description, optional image, one meal type, zero or more Kenmerken, total cooking time, ingredients, preparation steps, and optional notes.
 - R5. Recipe images must be responsive, must preserve an appetizing crop without distortion, and must fall back to a consistent placeholder when absent.
 
 **Classification**
@@ -103,7 +103,7 @@ flowchart TB
 - R14. Every recipe page must default to four servings and place a `− / aantal personen / +` selector directly above its ingredient list, limited to whole serving counts from 1 through 12.
 - R15. Changing the serving count must immediately multiply each numeric ingredient quantity by the selected serving count divided by four.
 - R16. Scaled quantities must use readable fractions or decimals without automatic rounding, while non-numeric quantities such as `naar smaak` remain unchanged.
-- R17. Every recipe page must present the recipe image or fallback, classification, description, times, difficulty, serving control, ingredient list, ordered preparation steps, and optional notes.
+- R17. Every recipe page must present the recipe image or fallback, classification, description, total cooking time, serving control, ingredient list, ordered preparation steps, and optional notes.
 
 **Responsive interaction**
 

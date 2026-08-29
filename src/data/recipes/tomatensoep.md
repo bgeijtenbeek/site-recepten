@@ -3,9 +3,7 @@ title: Romige tomatensoep
 description: Zachte tomatensoep met geroosterde tomaten en basilicum.
 mealType: Voorgerechten
 kenmerken: [Vega, Soep]
-prepTime: 10
-cookTime: 30
-difficulty: Makkelijk
+totalTime: 40
 servings: 4
 ingredients:
   - { name: tomaten, quantity: "800", unit: g }

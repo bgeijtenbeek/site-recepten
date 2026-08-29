@@ -4,9 +4,7 @@ import type { ImageMetadata } from 'astro';
 import type { RecipeSearchRecord } from './search';
 
 export interface RecipeSummary extends RecipeSearchRecord {
-  prepTime: number;
-  cookTime: number;
-  difficulty: string;
+  totalTime: number;
   image?: ImageMetadata;
   imageAlt?: string;
 }
@@ -19,9 +17,7 @@ export function toRecipeSummary(entry: CollectionEntry<'recipes'>): RecipeSummar
     ingredientNames: entry.data.ingredients.map(({ name }) => name),
     mealType: entry.data.mealType,
     kenmerken: [...entry.data.kenmerken],
-    prepTime: entry.data.prepTime,
-    cookTime: entry.data.cookTime,
-    difficulty: entry.data.difficulty,
+    totalTime: entry.data.totalTime,
     image: entry.data.image,
     imageAlt: entry.data.imageAlt,
   };

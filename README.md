@@ -1,4 +1,4 @@
-# GOAT-recepten
+# Fam. Geijtenbeek - Recepten
 
 Een compacte, Nederlandstalige receptenwebsite voor de familie. Astro bouwt alle recepten, categorieën en afbeeldingen vooraf tot een volledig statische website. Er is geen CMS, database of account nodig.
 
@@ -30,9 +30,7 @@ title: Pompoensoep
 description: Zachte soep met geroosterde pompoen en tijm.
 mealType: Voorgerechten
 kenmerken: [Vega]
-prepTime: 15
-cookTime: 35
-difficulty: Makkelijk
+totalTime: 50
 servings: 4
 ingredients:
   - { name: pompoen, quantity: "800", unit: g }
@@ -46,7 +44,7 @@ notes: De soep kan twee dagen in de koelkast worden bewaard.
 ---
 ```
 
-Alle velden tussen `---` worden tijdens de bouw gecontroleerd. De basis is altijd vier personen. `prepTime` en `cookTime` zijn aantallen minuten.
+Alle velden tussen `---` worden tijdens de bouw gecontroleerd. De basis is altijd vier personen. `totalTime` is de totale kooktijd in minuten.
 
 ### Hoeveelheden die meeschalen
 

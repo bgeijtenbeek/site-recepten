@@ -3,9 +3,7 @@ title: Gevulde eieren
 description: Klassieke gevulde eieren met mosterd en een snuf paprikapoeder.
 mealType: Overig
 kenmerken: [Vega, Ei]
-prepTime: 15
-cookTime: 10
-difficulty: Makkelijk
+totalTime: 25
 servings: 4
 ingredients:
   - { name: eieren, quantity: "8" }

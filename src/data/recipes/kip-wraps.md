@@ -3,9 +3,7 @@ title: Krokante kipwraps
 description: Handzame wraps met kruidige kip, sla en frisse yoghurtsaus.
 mealType: Overig
 kenmerken: [Kip]
-prepTime: 20
-cookTime: 15
-difficulty: Makkelijk
+totalTime: 35
 servings: 4
 ingredients:
   - { name: kleine wraps, quantity: "8" }

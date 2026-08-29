@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { DIFFICULTIES, kenmerkLabels, mealTypeLabels } from '../data/taxonomies';
+import { kenmerkLabels, mealTypeLabels } from '../data/taxonomies';
 import { parseQuantity } from './quantities';
 
 const text = z.string().trim().min(1);
@@ -36,9 +36,7 @@ export function makeRecipeSchema<TImage extends z.ZodType>(imageSchema: TImage) 
     imageAlt: text.optional(),
     mealType: z.enum(mealTypeLabels),
     kenmerken: z.array(z.enum(kenmerkLabels)).default([]),
-    prepTime: z.number().int().positive(),
-    cookTime: z.number().int().positive(),
-    difficulty: z.enum(DIFFICULTIES),
+    totalTime: z.number().int().positive(),
     servings: z.literal(4),
     ingredients: z.array(ingredientSchema).min(1),
     steps: z.array(text).min(1),
