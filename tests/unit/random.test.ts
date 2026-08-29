@@ -5,7 +5,7 @@ import { createSeededRandom, selectInspiration } from '../../src/lib/random';
 const recipes = [
   ...Array.from({ length: 12 }, (_, index) => ({
     id: `eligible-${index + 1}`,
-    mealType: index % 2 === 0 ? 'Hoofdgerechten' : 'Snacks',
+    mealType: index % 2 === 0 ? 'Hoofdgerechten' : 'Overig',
   })),
   { id: 'starter', mealType: 'Voorgerechten' },
   { id: 'dessert', mealType: 'Desserts' },

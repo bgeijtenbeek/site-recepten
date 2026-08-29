@@ -13,7 +13,9 @@ test('keeps direct routes and internal assets below the project path', async ({ 
   for (const route of [
     'recepten/kip-kerrie-rijst/',
     'maaltijdtypes/hoofdgerechten/',
+    'maaltijdtypes/overig/',
     'kenmerken/kip/',
+    'kenmerken/soep/',
   ]) {
     const response = await page.goto(route);
     expect(response?.status()).toBe(200);

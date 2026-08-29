@@ -1,7 +1,7 @@
 ---
 title: Frisse rijstsalade
 description: Lichte salade met rijst, komkommer, erwtjes en citroen.
-mealType: Bijgerechten
+mealType: Overig
 kenmerken: [Vega, Rijst]
 prepTime: 15
 cookTime: 12

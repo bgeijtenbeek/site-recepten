@@ -1,7 +1,7 @@
 ---
 title: Krokante kipwraps
 description: Handzame wraps met kruidige kip, sla en frisse yoghurtsaus.
-mealType: Snacks
+mealType: Overig
 kenmerken: [Kip]
 prepTime: 20
 cookTime: 15

@@ -20,6 +20,9 @@ test.describe('statische ervaring zonder JavaScript', () => {
     await page.goto('./');
     const maaltijdtypes = page.getByRole('navigation', { name: 'Maaltijdtypes' });
     await maaltijdtypes.locator('summary').click();
+    await expect(maaltijdtypes.getByRole('link', { name: 'Overig', exact: true })).toBeVisible();
+    await expect(maaltijdtypes.getByRole('link', { name: 'Bijgerechten', exact: true })).toHaveCount(0);
+    await expect(maaltijdtypes.getByRole('link', { name: 'Snacks', exact: true })).toHaveCount(0);
     await maaltijdtypes.getByRole('link', { name: 'Hoofdgerechten' }).click();
     await expect(page.getByRole('heading', { name: 'Hoofdgerechten', level: 1 })).toBeVisible();
     await expect(page.locator('.recipe-card h2')).toHaveCount(0);

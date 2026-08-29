@@ -1,7 +1,7 @@
 ---
 title: Geroosterde groenten met kikkererwten
 description: Kleurrijke ovengroenten met kruidige kikkererwten.
-mealType: Bijgerechten
+mealType: Overig
 kenmerken: [Vega, Ovengerecht]
 prepTime: 15
 cookTime: 30

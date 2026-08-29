@@ -69,8 +69,8 @@ The collection also needs a maintainable way to grow without introducing a CMS o
 
 **Classification**
 
-- R6. Every recipe must have exactly one meal type from `Ontbijt/Lunch`, `Voorgerechten`, `Hoofdgerechten`, `Bijgerechten`, `Desserts`, or `Snacks`.
-- R7. A recipe may have multiple Kenmerken, ordered as `Vlees`, `Vis`, `Kip`, `Vega`, `Pasta`, `Rijst`, `Aardappel`, `Ei`, `Zoet`, and `Ovengerecht`.
+- R6. Every recipe must have exactly one meal type from `Ontbijt/Lunch`, `Voorgerechten`, `Hoofdgerechten`, `Desserts`, or `Overig`.
+- R7. A recipe may have multiple Kenmerken, ordered as `Vlees`, `Vis`, `Kip`, `Vega`, `Pasta`, `Rijst`, `Aardappel`, `Soep`, `Ei`, `Zoet`, and `Ovengerecht`.
 
 **Discovery and browsing**
 

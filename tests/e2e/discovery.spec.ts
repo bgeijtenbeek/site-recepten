@@ -20,7 +20,7 @@ test('beperkt actieve filterresultaten niet tot de inspiratieomvang', async ({ p
   const filterOrder = await page.locator('input[name="kenmerk"]').evaluateAll((items) =>
     items.map((item) => (item as HTMLInputElement).value),
   );
-  expect(filterOrder).toEqual(['Vlees', 'Vis', 'Kip', 'Vega', 'Pasta', 'Rijst', 'Aardappel', 'Ei', 'Zoet', 'Ovengerecht']);
+  expect(filterOrder).toEqual(['Vlees', 'Vis', 'Kip', 'Vega', 'Pasta', 'Rijst', 'Aardappel', 'Soep', 'Ei', 'Zoet', 'Ovengerecht']);
 
   await page.getByRole('checkbox', { name: 'Vega' }).check();
   await expect(page.locator('[data-recipe-id]:visible')).toHaveCount(12);

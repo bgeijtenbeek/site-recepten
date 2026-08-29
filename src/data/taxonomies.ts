@@ -2,9 +2,8 @@ export const MEAL_TYPES = [
   { label: 'Ontbijt/Lunch', slug: 'ontbijt-lunch' },
   { label: 'Voorgerechten', slug: 'voorgerechten' },
   { label: 'Hoofdgerechten', slug: 'hoofdgerechten' },
-  { label: 'Bijgerechten', slug: 'bijgerechten' },
   { label: 'Desserts', slug: 'desserts' },
-  { label: 'Snacks', slug: 'snacks' },
+  { label: 'Overig', slug: 'overig' },
 ] as const;
 
 export const KENMERKEN = [
@@ -15,6 +14,7 @@ export const KENMERKEN = [
   { label: 'Pasta', slug: 'pasta' },
   { label: 'Rijst', slug: 'rijst' },
   { label: 'Aardappel', slug: 'aardappel' },
+  { label: 'Soep', slug: 'soep' },
   { label: 'Ei', slug: 'ei' },
   { label: 'Zoet', slug: 'zoet' },
   { label: 'Ovengerecht', slug: 'ovengerecht' },

@@ -16,7 +16,7 @@ const records = [
     title: 'Geroosterde groenten',
     description: 'Kleurrijk en knapperig',
     ingredientNames: ['paprika', 'kikkererwten'],
-    mealType: 'Bijgerechten',
+    mealType: 'Overig',
     kenmerken: ['Vega', 'Ovengerecht'],
   },
   {
