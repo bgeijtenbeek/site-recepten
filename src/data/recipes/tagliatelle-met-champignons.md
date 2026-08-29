@@ -1,6 +1,8 @@
 ---
 title: Tagliatelle met champignons
 description: Romige tagliatelle met champignons, ontbijtspek, lente-ui en gevulde olijven.
+image: ../../assets/recipes/tagliatelle-met-champignons.jpeg
+imageAlt: Een bord tagliatelle met champignons, ontbijtspek en bieslook
 mealType: Hoofdgerechten
 kenmerken: [Vlees, Pasta]
 totalTime: 30
