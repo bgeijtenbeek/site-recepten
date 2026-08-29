@@ -29,7 +29,7 @@ const { label, kind, description, emptyMessage, recipes } = Astro.props;
   </header>
   {recipes.length > 0 ? (
     <div class="recipe-grid listing-grid">
-      {recipes.map((recipe) => <RecipeCard recipe={recipe} />)}
+      {recipes.map((recipe) => <RecipeCard recipe={recipe} headingLevel="h3" />)}
     </div>
   ) : (
     <EmptyState message={emptyMessage} />

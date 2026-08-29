@@ -22,6 +22,8 @@ test.describe('statische ervaring zonder JavaScript', () => {
     await maaltijdtypes.locator('summary').click();
     await maaltijdtypes.getByRole('link', { name: 'Hoofdgerechten' }).click();
     await expect(page.getByRole('heading', { name: 'Hoofdgerechten', level: 1 })).toBeVisible();
+    await expect(page.locator('.recipe-card h2')).toHaveCount(0);
+    await expect(page.locator('.recipe-card h3')).not.toHaveCount(0);
     const titles = await page.locator('.card-title').allTextContents();
     expect(titles).toEqual([...titles].sort((a, b) => a.localeCompare(b, 'nl-NL')));
 
