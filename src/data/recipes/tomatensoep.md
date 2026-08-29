@@ -2,7 +2,7 @@
 title: Romige tomatensoep
 description: Zachte tomatensoep met geroosterde tomaten en basilicum.
 mealType: Voorgerechten
-kenmerken: [Vega, Soep]
+kenmerken: [Vega]
 prepTime: 10
 cookTime: 30
 difficulty: Makkelijk

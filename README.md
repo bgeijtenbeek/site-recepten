@@ -1,4 +1,4 @@
-# Familierecepten
+# GOAT-recepten
 
 Een compacte, Nederlandstalige receptenwebsite voor de familie. Astro bouwt alle recepten, categorieën en afbeeldingen vooraf tot een volledig statische website. Er is geen CMS, database of account nodig.
 
@@ -29,7 +29,7 @@ Maak voor ieder recept één Markdown-bestand in `src/data/recipes/`. De bestand
 title: Pompoensoep
 description: Zachte soep met geroosterde pompoen en tijm.
 mealType: Voorgerechten
-kenmerken: [Vega, Soep]
+kenmerken: [Vega]
 prepTime: 15
 cookTime: 35
 difficulty: Makkelijk

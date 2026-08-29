@@ -8,10 +8,10 @@ interface Props {
 }
 
 const {
-  title = 'Familierecepten',
+  title = 'GOAT-recepten',
   description = 'Een compacte verzameling van onze favoriete familierecepten.',
 } = Astro.props;
-const pageTitle = title === 'Familierecepten' ? title : `${title} · Familierecepten`;
+const pageTitle = title === 'GOAT-recepten' ? title : `${title} · GOAT-recepten`;
 const homeUrl = withBase('', import.meta.env.BASE_URL);
 const faviconUrl = withBase('favicon.svg', import.meta.env.BASE_URL);
 ---
@@ -30,11 +30,14 @@ const faviconUrl = withBase('favicon.svg', import.meta.env.BASE_URL);
     <a class="skip-link" href="#inhoud">Ga naar de inhoud</a>
     <header class="site-header">
       <div class="page-shell header-inner">
-        <a class="wordmark" href={homeUrl} aria-label="Familierecepten, naar de startpagina">
-          <span aria-hidden="true">FR</span>
-          <strong>Familierecepten</strong>
+        <a class="wordmark" href={homeUrl} aria-label="GOAT-recepten, naar de startpagina">
+          <span class="wordmark-icon" aria-hidden="true">
+            <svg viewBox="0 0 32 32" focusable="false">
+              <path d="M4 12h18v3c0 5-3.5 8-9 8s-9-3-9-8v-3Zm18 2h7" />
+            </svg>
+          </span>
+          <strong>GOAT-recepten</strong>
         </a>
-        <span class="header-note">Voor aan onze tafel</span>
       </div>
     </header>
     <main id="inhoud" class="page-shell">

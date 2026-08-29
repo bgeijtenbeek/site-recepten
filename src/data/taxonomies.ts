@@ -8,16 +8,16 @@ export const MEAL_TYPES = [
 ] as const;
 
 export const KENMERKEN = [
-  { label: 'Kip', slug: 'kip' },
-  { label: 'Gehakt', slug: 'gehakt' },
+  { label: 'Vlees', slug: 'vlees' },
   { label: 'Vis', slug: 'vis' },
+  { label: 'Kip', slug: 'kip' },
   { label: 'Vega', slug: 'vega' },
-  { label: 'Soep', slug: 'soep' },
   { label: 'Pasta', slug: 'pasta' },
   { label: 'Rijst', slug: 'rijst' },
-  { label: 'Ovengerecht', slug: 'ovengerecht' },
   { label: 'Aardappel', slug: 'aardappel' },
   { label: 'Ei', slug: 'ei' },
+  { label: 'Zoet', slug: 'zoet' },
+  { label: 'Ovengerecht', slug: 'ovengerecht' },
 ] as const;
 
 export const DIFFICULTIES = ['Makkelijk', 'Gemiddeld', 'Moeilijk'] as const;

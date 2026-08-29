@@ -8,10 +8,11 @@ import RecipeCard from './RecipeCard.astro';
 
 interface Props { recipes: RecipeSummary[] }
 const { recipes } = Astro.props;
-const initialIds = new Set(selectInspiration(recipes, 10, () => 0.42).map(({ id }) => id));
+const inspirationLimit = 6;
+const initialIds = new Set(selectInspiration(recipes, inspirationLimit, () => 0.42).map(({ id }) => id));
 ---
 
-<recipe-discovery class="discovery" data-limit="10">
+<recipe-discovery class="discovery" data-limit={inspirationLimit}>
   <div data-enhancement-controls hidden>
     <div class="search-wrap">
       <label for="recipe-search">Zoek een recept</label>
@@ -93,7 +94,7 @@ const initialIds = new Set(selectInspiration(recipes, 10, () => 0.42).map(({ id 
         searchableText: element.dataset.search ?? '',
         kenmerken: new Set((element.dataset.kenmerken ?? '').split('|').filter(Boolean)),
       }));
-      const limit = Number(this.dataset.limit ?? 10);
+      const limit = Number(this.dataset.limit ?? 6);
       const randomValues = new Uint32Array(Math.min(limit, records.length) || 1);
       crypto.getRandomValues(randomValues);
       let randomIndex = 0;

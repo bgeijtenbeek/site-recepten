@@ -2,7 +2,7 @@
 title: Chocolademousse
 description: Luchtige chocolademousse voor een klein feestelijk nagerecht.
 mealType: Desserts
-kenmerken: [Vega, Ei]
+kenmerken: [Vega, Ei, Zoet]
 prepTime: 20
 cookTime: 5
 difficulty: Gemiddeld

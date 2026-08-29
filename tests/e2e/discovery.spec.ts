@@ -4,14 +4,27 @@ test.beforeEach(async ({ page }) => {
   await page.goto('./');
 });
 
-test('toont tien unieke, geschikte inspiratierecepten', async ({ page }) => {
+test('toont zes unieke, geschikte inspiratierecepten', async ({ page }) => {
   const cards = page.locator('[data-recipe-id]:visible');
-  await expect(cards).toHaveCount(10);
+  await expect(cards).toHaveCount(6);
+  await expect(cards.locator('.card-kenmerken')).toHaveCount(6);
+  expect((await cards.locator('.card-kenmerken').allTextContents()).every((text) => text.trim().length > 0)).toBe(true);
   const ids = await cards.evaluateAll((items) => items.map((item) => item.getAttribute('data-recipe-id')));
-  expect(new Set(ids).size).toBe(10);
+  expect(new Set(ids).size).toBe(6);
   const mealTypes = await cards.evaluateAll((items) => items.map((item) => item.getAttribute('data-meal-type')));
   expect(mealTypes).not.toContain('Voorgerechten');
   expect(mealTypes).not.toContain('Desserts');
+});
+
+test('beperkt actieve filterresultaten niet tot de inspiratieomvang', async ({ page }) => {
+  const filterOrder = await page.locator('input[name="kenmerk"]').evaluateAll((items) =>
+    items.map((item) => (item as HTMLInputElement).value),
+  );
+  expect(filterOrder).toEqual(['Vlees', 'Vis', 'Kip', 'Vega', 'Pasta', 'Rijst', 'Aardappel', 'Ei', 'Zoet', 'Ovengerecht']);
+
+  await page.getByRole('checkbox', { name: 'Vega' }).check();
+  await expect(page.locator('[data-recipe-id]:visible')).toHaveCount(12);
+  await expect(page.getByText('12 recepten gevonden')).toBeVisible();
 });
 
 test('zoekt live in ingrediënten en wist terug naar dezelfde inspiratie', async ({ page }) => {

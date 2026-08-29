@@ -5,15 +5,22 @@ test.describe('statische ervaring zonder JavaScript', () => {
 
   test('blijft volledig doorbladerbaar', async ({ page }) => {
     await page.goto('./');
-    await expect(page.getByRole('heading', { name: 'Wat eten we vandaag?' })).toBeVisible();
-    await expect(page.locator('[data-recipe-id]:visible')).toHaveCount(10);
+    await expect(page.getByRole('heading', { name: 'Wat eten we vandaag?' })).toHaveCount(0);
+    await expect(page.getByText('Onze digitale receptenmap')).toHaveCount(0);
+    await expect(page.getByText('Zoek in onze favorieten, filter op wat er in huis is of laat je verrassen.')).toHaveCount(0);
+    await expect(page.getByText('Voor aan onze tafel')).toHaveCount(0);
+    await expect(page.locator('[data-recipe-id]:visible')).toHaveCount(6);
 
     const kenmerken = page.getByRole('navigation', { name: 'Blader op kenmerken' });
+    await expect(kenmerken.locator('details')).not.toHaveAttribute('open', '');
+    await kenmerken.locator('summary').click();
     await kenmerken.getByRole('link', { name: 'Kip', exact: true }).click();
     await expect(page.getByRole('heading', { name: 'Kip', level: 1 })).toBeVisible();
 
     await page.goto('./');
-    await page.getByRole('link', { name: 'Hoofdgerechten' }).click();
+    const maaltijdtypes = page.getByRole('navigation', { name: 'Maaltijdtypes' });
+    await maaltijdtypes.locator('summary').click();
+    await maaltijdtypes.getByRole('link', { name: 'Hoofdgerechten' }).click();
     await expect(page.getByRole('heading', { name: 'Hoofdgerechten', level: 1 })).toBeVisible();
     const titles = await page.locator('.card-title').allTextContents();
     expect(titles).toEqual([...titles].sort((a, b) => a.localeCompare(b, 'nl-NL')));
@@ -38,6 +45,19 @@ for (const width of [360, 768, 1280]) {
       await page.goto(route);
       const overflows = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
       expect(overflows).toBe(false);
+
+      if (route === './' && width === 1280) {
+        const contentWidths = await page.locator('.search-field, .homepage-taxonomies').evaluateAll((items) =>
+          items.map((item) => item.getBoundingClientRect().width),
+        );
+        expect(Math.abs(contentWidths[0] - contentWidths[1])).toBeLessThan(1);
+        const columns = await page.locator('[data-grid]').evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(' ').length);
+        expect(columns).toBe(3);
+        const metadataLeftEdges = await page.locator('.recipe-card').first().locator('.card-meta dd').evaluateAll((items) =>
+          items.map((item) => item.getBoundingClientRect().left),
+        );
+        expect(Math.abs(metadataLeftEdges[0] - metadataLeftEdges[1])).toBeLessThan(1);
+      }
     }
   });
 }

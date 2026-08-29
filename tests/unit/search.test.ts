@@ -25,7 +25,7 @@ const records = [
     description: 'Zachte soep',
     ingredientNames: ['bloemkool'],
     mealType: 'Voorgerechten',
-    kenmerken: ['Vega', 'Soep'],
+    kenmerken: ['Vega'],
   },
 ] as const;
 

@@ -43,11 +43,11 @@ button, input, a { -webkit-tap-highlight-color: transparent; }
 .skip-link:focus { transform: none; }
 
 .site-header { border-bottom: 1px solid var(--line); }
-.header-inner { min-height: 4.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.header-inner { min-height: 4.5rem; display: flex; align-items: center; }
 .wordmark { display: inline-flex; align-items: center; gap: .65rem; text-decoration: none; }
-.wordmark > span { display: grid; place-items: center; width: 2.25rem; aspect-ratio: 1; border-radius: 50%; background: var(--accent); color: white; font-family: var(--font-display); font-size: .82rem; letter-spacing: .05em; }
+.wordmark-icon { display: grid; place-items: center; width: 2.25rem; aspect-ratio: 1; border-radius: 50%; background: var(--accent); color: white; }
+.wordmark-icon svg { width: 1.4rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2.5; }
 .wordmark strong { font-family: var(--font-display); font-size: 1.22rem; font-weight: 600; }
-.header-note { color: var(--muted); font-size: .88rem; }
 .site-footer { margin-top: 5rem; padding: 2rem 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .88rem; }
 
 h1, h2, h3, p { margin-top: 0; }
@@ -58,12 +58,8 @@ h3 { font-size: 1.45rem; }
 .eyebrow { margin-bottom: .55rem; color: var(--accent); font-family: var(--font-body); font-size: .72rem; font-weight: 700; letter-spacing: .12em; line-height: 1.3; text-transform: uppercase; }
 .eyebrow-link { display: inline-block; text-decoration: none; }
 
-.hero { padding: clamp(3.5rem, 9vw, 7.5rem) 0 2.25rem; max-width: 58rem; }
-.hero h1 { max-width: 12ch; }
-.hero-copy { max-width: 42rem; color: var(--muted); font-size: clamp(1.05rem, 2vw, 1.3rem); }
-
 .discovery { display: block; }
-.search-wrap { max-width: 48rem; margin-bottom: 1.75rem; }
+.search-wrap { width: 100%; margin: clamp(2rem, 5vw, 3.5rem) 0 1.75rem; }
 .search-wrap > label, .filter-group legend { display: block; margin-bottom: .5rem; font-size: .9rem; font-weight: 700; }
 .search-field { position: relative; }
 .search-field svg { position: absolute; top: 50%; left: 1rem; width: 1.25rem; fill: none; stroke: currentColor; stroke-width: 2; transform: translateY(-50%); pointer-events: none; }
@@ -100,20 +96,31 @@ h3 { font-size: 1.45rem; }
 .card-body { padding: 1.15rem 1.2rem 1.25rem; }
 .card-title { margin-bottom: .55rem; }
 .card-title a { text-decoration: none; }
-.card-description { margin-bottom: 1.1rem; color: var(--muted); font-size: .9rem; }
-.card-meta { display: flex; gap: .5rem; margin: 0; color: var(--muted); font-size: .78rem; }
-.card-meta div + div::before { content: '·'; margin-right: .5rem; }
+.card-description { margin-bottom: .75rem; color: var(--muted); font-size: .9rem; }
+.card-kenmerken { margin-bottom: .85rem; color: var(--accent-dark); font-size: .78rem; font-style: italic; }
+.card-meta { display: grid; gap: .2rem; margin: 0; color: var(--muted); font-size: .78rem; }
 .card-meta dd { margin: 0; }
 
 .category-section { margin-top: clamp(4rem, 9vw, 7rem); }
-.homepage-taxonomies { margin-top: 2.5rem; }
-.homepage-taxonomies .category-section { margin-top: 2.5rem; }
+.homepage-taxonomies { display: grid; gap: 1rem; margin: 1.25rem 0 1.75rem; }
+.homepage-taxonomies .category-section { margin-top: 0; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
+.category-disclosure summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 5.25rem; padding: 1rem 1.25rem; cursor: pointer; list-style: none; }
+.category-disclosure summary::-webkit-details-marker { display: none; }
+.category-disclosure summary:focus-visible { outline: 3px solid #da844f; outline-offset: -3px; }
+.category-disclosure[open] summary { border-bottom: 1px solid var(--line); }
+.category-summary-copy { display: grid; gap: .15rem; }
+.category-summary-copy .eyebrow { margin-bottom: 0; }
+.category-title { font-family: var(--font-display); font-size: clamp(1.65rem, 3vw, 2.2rem); line-height: 1; letter-spacing: -.02em; }
+.disclosure-icon { display: grid; flex: 0 0 auto; place-items: center; width: 2.25rem; aspect-ratio: 1; border-radius: 50%; background: var(--accent-soft); color: var(--accent-dark); transition: transform .2s ease; }
+.disclosure-icon svg { width: 1.2rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2; }
+.category-disclosure[open] .disclosure-icon { transform: rotate(180deg); }
+.category-disclosure .category-links { padding: 0 1.25rem 1rem; }
 .section-heading { border-bottom: 1px solid var(--line); }
 .category-links { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
 .category-links a { display: flex; align-items: center; justify-content: space-between; min-height: 3.7rem; border-bottom: 1px solid var(--line); font-family: var(--font-display); font-size: 1.25rem; text-decoration: none; }
 .category-links a span:last-child { color: var(--accent); transition: transform .2s; }
 .category-links a:hover span:last-child { transform: translateX(.25rem); }
-.category-links--compact a { min-height: 3.25rem; font-family: var(--font-body); font-size: 1rem; font-weight: 600; }
+.category-links--homepage a { min-height: 2.75rem; font-family: var(--font-body); font-size: .9rem; font-weight: 600; }
 
 .breadcrumbs { display: flex; gap: .55rem; padding: 1.25rem 0; overflow: hidden; color: var(--muted); font-size: .8rem; white-space: nowrap; }
 .breadcrumbs span:last-child { overflow: hidden; text-overflow: ellipsis; }
@@ -163,12 +170,17 @@ h3 { font-size: 1.45rem; }
   .page-shell { width: min(100% - 4rem, 72rem); }
   .recipe-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
   .category-links { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 2.5rem; }
+  .homepage-taxonomies { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); align-items: start; }
+  .homepage-taxonomies .category-links { column-gap: 1rem; }
   .recipe-intro { grid-template-columns: minmax(0, 1fr) minmax(20rem, .8fr); align-items: center; }
   .recipe-columns { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(3rem, 7vw, 6rem); }
 }
 
+@media (min-width: 64rem) {
+  .recipe-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
 @media (max-width: 31rem) {
-  .header-note { display: none; }
   .results-heading { align-items: start; flex-direction: column; }
   .text-button { margin-top: -.75rem; }
   .serving-toolbar { align-items: start; flex-direction: column; }

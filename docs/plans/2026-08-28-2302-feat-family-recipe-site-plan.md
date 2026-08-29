@@ -70,7 +70,7 @@ The collection also needs a maintainable way to grow without introducing a CMS o
 **Classification**
 
 - R6. Every recipe must have exactly one meal type from `Ontbijt/Lunch`, `Voorgerechten`, `Hoofdgerechten`, `Bijgerechten`, `Desserts`, or `Snacks`.
-- R7. A recipe may have multiple Kenmerken, starting with `Kip`, `Gehakt`, `Vis`, `Vega`, `Soep`, `Pasta`, `Rijst`, `Ovengerecht`, `Aardappel`, and `Ei`.
+- R7. A recipe may have multiple Kenmerken, ordered as `Vlees`, `Vis`, `Kip`, `Vega`, `Pasta`, `Rijst`, `Aardappel`, `Ei`, `Zoet`, and `Ovengerecht`.
 
 **Discovery and browsing**
 
@@ -79,14 +79,14 @@ The collection also needs a maintainable way to grow without introducing a CMS o
 - R10. Activating search or filtering must replace the random inspiration list with all matching recipes and must provide a clear empty state when nothing matches.
 - R11. The homepage must link to the meal-type and Kenmerk category pages.
 - R12. Every meal type and every Kenmerk must have a dedicated page listing its recipes alphabetically by Dutch recipe title.
-- R13. On each unfiltered homepage load or refresh, the inspiration section must show ten distinct randomly selected recipes while excluding recipes whose meal type is `Voorgerechten` or `Desserts`; when fewer than ten eligible recipes exist, it must show every eligible recipe without duplication.
+- R13. On each unfiltered homepage load or refresh, the inspiration section must show six distinct randomly selected recipes while excluding recipes whose meal type is `Voorgerechten` or `Desserts`; when fewer than six eligible recipes exist, it must show every eligible recipe without duplication.
 
 ```mermaid
 flowchart TB
   H[Homepage] --> S[Live search]
   H --> M[Meal-type links]
   H --> K[Kenmerken multi-select]
-  H --> I[Ten random inspiration recipes]
+  H --> I[Six random inspiration recipes]
   S --> L[Matching recipe list]
   K --> L
   M --> C[Alphabetical category page]
@@ -140,8 +140,8 @@ flowchart TB
 
 ### Acceptance Examples
 
-- AE1. **Covers R13.** Given at least twelve eligible recipes plus recipes in `Voorgerechten` and `Desserts`, when the homepage loads without active controls, then it shows ten distinct eligible recipes and none from either excluded meal type.
-- AE2. **Covers R13.** Given seven eligible recipes, when the homepage loads, then all seven appear once and the page does not invent or duplicate entries to reach ten.
+- AE1. **Covers R13.** Given at least six eligible recipes plus recipes in `Voorgerechten` and `Desserts`, when the homepage loads without active controls, then it shows six distinct eligible recipes and none from either excluded meal type.
+- AE2. **Covers R13.** Given five eligible recipes, when the homepage loads, then all five appear once and the page does not invent or duplicate entries to reach six.
 - AE3. **Covers R8, R10.** Given a recipe whose ingredient list contains `kikkererwten` but whose title does not, when A1 types that word, then the random list is replaced by a result set containing that recipe.
 - AE4. **Covers R9, R10.** Given selected Kenmerken `Kip` and `Rijst`, when recipes match only one of them, then those recipes are excluded and only recipes carrying both remain.
 - AE5. **Covers R12.** Given three recipes in one category with titles beginning with B, A, and C, when its page opens, then they appear in A, B, C order.
@@ -439,7 +439,7 @@ flowchart LR
   6. Remove or hide inert enhancement controls until their scripts initialize.
 - **Patterns to follow:** Astro processed scripts or custom elements with native buttons, data attributes, and minimal client state.
 - **Test scenarios:**
-  - Covers AE1. A fixed test seed renders ten distinct eligible recipes and excludes both blocked meal types.
+  - Covers AE1. A fixed test seed renders six distinct eligible recipes and excludes both blocked meal types.
   - Reload initialization can choose a new sample while clearing controls restores the current sample.
   - Covers AE3 and AE4. Search and multiple Kenmerken combine by intersection and replace inspiration immediately.
   - Covers AE9. No matches replace the cards with the Dutch empty state.

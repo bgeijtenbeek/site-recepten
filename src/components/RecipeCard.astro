@@ -22,6 +22,7 @@ const href = recipeUrl(recipe.id, import.meta.env.BASE_URL);
     <p class="eyebrow">{recipe.mealType}</p>
     <Heading class="card-title"><a href={href}>{recipe.title}</a></Heading>
     <p class="card-description">{recipe.description}</p>
+    <p class="card-kenmerken"><span class="sr-only">Kenmerken: </span>{recipe.kenmerken.join(' · ')}</p>
     <dl class="card-meta" aria-label="Receptinformatie">
       <div><dt class="sr-only">Totale tijd</dt><dd>{recipe.prepTime + recipe.cookTime} min</dd></div>
       <div><dt class="sr-only">Moeilijkheid</dt><dd>{recipe.difficulty}</dd></div>

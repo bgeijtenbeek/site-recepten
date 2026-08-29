@@ -2,7 +2,7 @@
 title: Spaghetti bolognese
 description: Rijke tomatensaus met gehakt, groenten en spaghetti.
 mealType: Hoofdgerechten
-kenmerken: [Gehakt, Pasta]
+kenmerken: [Vlees, Pasta]
 prepTime: 15
 cookTime: 35
 difficulty: Gemiddeld
