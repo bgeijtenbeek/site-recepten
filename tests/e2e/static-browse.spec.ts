@@ -9,13 +9,13 @@ test.describe('statische ervaring zonder JavaScript', () => {
     await expect(page.getByText('Onze digitale receptenmap')).toHaveCount(0);
     await expect(page.getByText('Zoek in onze favorieten, filter op wat er in huis is of laat je verrassen.')).toHaveCount(0);
     await expect(page.getByText('Voor aan onze tafel')).toHaveCount(0);
-    await expect(page.locator('[data-recipe-id]:visible')).toHaveCount(6);
+    await expect(page.locator('[data-recipe-id]:visible')).toHaveCount(2);
 
     const kenmerken = page.getByRole('navigation', { name: 'Blader op kenmerken' });
     await expect(kenmerken.locator('details')).not.toHaveAttribute('open', '');
     await kenmerken.locator('summary').click();
-    await kenmerken.getByRole('link', { name: 'Kip', exact: true }).click();
-    await expect(page.getByRole('heading', { name: 'Kip', level: 1 })).toBeVisible();
+    await kenmerken.getByRole('link', { name: 'Soep', exact: true }).click();
+    await expect(page.getByRole('heading', { name: 'Soep', level: 1 })).toBeVisible();
 
     await page.goto('./');
     const maaltijdtypes = page.getByRole('navigation', { name: 'Maaltijdtypes' });
@@ -30,9 +30,9 @@ test.describe('statische ervaring zonder JavaScript', () => {
     const titles = await page.locator('.card-title').allTextContents();
     expect(titles).toEqual([...titles].sort((a, b) => a.localeCompare(b, 'nl-NL')));
 
-    await page.getByRole('link', { name: 'Kip-kerrie met rijst' }).click();
+    await page.getByRole('link', { name: 'Spinaziesoep' }).click();
     await expect(page.getByText('Totale kooktijd', { exact: true })).toBeVisible();
-    await expect(page.getByText('40 min', { exact: true })).toBeVisible();
+    await expect(page.getByText('15 min', { exact: true })).toBeVisible();
     await expect(page.getByText('Voorbereiden', { exact: true })).toHaveCount(0);
     await expect(page.getByText('Moeilijkheid', { exact: true })).toHaveCount(0);
     await expect(page.getByRole('heading', { name: 'Ingrediënten' })).toBeVisible();
@@ -41,7 +41,7 @@ test.describe('statische ervaring zonder JavaScript', () => {
   });
 
   test('toont een bruikbare afbeeldingsfallback', async ({ page }) => {
-    await page.goto('recepten/aardappelgratin/');
+    await page.goto('recepten/spinaziesoep/');
     await expect(page.getByRole('img', { name: 'Geen foto beschikbaar' })).toBeVisible();
     await expect(page.locator('.recipe-intro img')).toHaveCount(0);
   });
@@ -50,7 +50,7 @@ test.describe('statische ervaring zonder JavaScript', () => {
 for (const width of [360, 768, 1280]) {
   test(`heeft geen horizontale overloop bij ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
-    for (const route of ['./', 'recepten/kip-kerrie-rijst/', 'kenmerken/vega/']) {
+    for (const route of ['./', 'recepten/spinaziesoep/', 'kenmerken/vega/']) {
       await page.goto(route);
       const overflows = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
       expect(overflows).toBe(false);

@@ -49,7 +49,9 @@ const initialIds = new Set(selectInspiration(recipes, inspirationLimit, () => 0.
     </div>
     <button class="text-button" type="button" data-clear hidden>Wis zoeken en filters</button>
   </div>
-  <p class="result-status" data-status aria-live="polite">{initialIds.size} recepten ter inspiratie</p>
+  <p class="result-status" data-status aria-live="polite">
+    {initialIds.size} {initialIds.size === 1 ? 'recept' : 'recepten'} ter inspiratie
+  </p>
 
   <div class="recipe-grid" data-grid>
     {recipes.map((recipe) => (
@@ -123,7 +125,7 @@ const initialIds = new Set(selectInspiration(recipes, inspirationLimit, () => 0.
         title.textContent = active ? 'Dit past bij je keuze' : 'Waar hebben we trek in?';
         status.textContent = active
           ? `${visible.length} ${visible.length === 1 ? 'recept' : 'recepten'} gevonden`
-          : `${visible.length} recepten ter inspiratie`;
+          : `${visible.length} ${visible.length === 1 ? 'recept' : 'recepten'} ter inspiratie`;
       };
 
       search.addEventListener('input', render);

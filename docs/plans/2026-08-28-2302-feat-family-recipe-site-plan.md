@@ -172,7 +172,7 @@ flowchart TB
 
 ### Dependencies / Assumptions
 
-- The maintainer will supply or replace family recipe content and photographs; implementation may use clearly replaceable demonstration content to exercise the complete experience.
+- The maintainer supplies family recipe content and photographs; demonstration recipes must not ship alongside the real collection.
 - The first release targets current evergreen browsers and assumes an internet connection.
 - The site provides no access control; repository and GitHub Pages visibility determine who can reach published family content.
 - GitHub Pages hosting and repository setup will be available when deployment work begins.
@@ -207,7 +207,7 @@ These are unvalidated planning bets created by the non-interactive pipeline and 
 - Invalid recipe data and declared-but-missing images fail the build with file and field context; an omitted image uses the fallback.
 - Every defined meal type and Kenmerk gets a page even when it has no recipes, with a concise Dutch empty state.
 - Search, selected Kenmerken, and serving counts are ephemeral and are not persisted in URLs or browser storage.
-- Replaceable demonstration recipes may ship so the complete experience and the ten-item inspiration rule can be verified before family content is supplied.
+- Only family recipes ship in the content collection; isolated test fixtures verify larger inspiration samples and excluded meal types.
 - The initial GitHub repository is expected to be a project site rather than the special account-root Pages repository; deployment configuration remains environment-driven so the repository name is not hard-coded.
 
 ### High-Level Technical Design
@@ -362,7 +362,7 @@ flowchart LR
   2. Validate one meal type, unique known Kenmerken, four base servings, positive times, nonempty ingredients, and nonempty preparation steps per KTD2.
   3. Give each ingredient either a parseable scalable quantity or a fixed Dutch amount, never both, per KTD3.
   4. Validate an optional local image and its alt text while leaving absent images valid per KTD6.
-  5. Add replaceable demonstration recipes that cover all page states and both excluded inspiration meal types.
+  5. Add the initial family recipe and keep broader page-state coverage in isolated test fixtures.
 - **Technical design:** Directional quantity grammar: `decimal | fraction | mixed-fraction`; normalize to a reduced rational before multiplying by `selected servings / 4`. Emit denominator-one results as whole numbers, terminating values with a Dutch decimal comma, and all other values as reduced proper or mixed fractions.
 - **Patterns to follow:** Astro Content Layer with a local glob loader and schema validation.
 - **Test scenarios:**
@@ -374,7 +374,7 @@ flowchart LR
   - One third scaled from four to five servings renders exactly as `5/12`, while terminating results use Dutch decimal commas.
   - Malformed, zero, and negative quantities fail with actionable field context.
   - Covers AE6 and AE7. Scaling six servings from a four-serving base preserves exact arithmetic and Dutch decimal output.
-- **Verification:** Astro content checks and the unit suite accept all demonstration recipes and reject every invalid fixture.
+- **Verification:** Astro content checks and the unit suite accept all family recipes and reject every invalid fixture.
 
 ### U3. Build pure discovery and URL utilities
 
@@ -416,7 +416,7 @@ flowchart LR
 - **Patterns to follow:** Server-rendered Astro components, semantic landmarks, CSS custom properties, and no client framework.
 - **Test scenarios:**
   - JavaScript-disabled navigation reaches the homepage, every taxonomy namespace, and a recipe detail page under the configured base.
-  - Covers AE2. Fewer than ten eligible recipes render once each in the static inspiration section.
+  - Covers AE2. Fewer than six eligible recipes render once each in the static inspiration section.
   - Covers AE5. Category cards follow Dutch alphabetical order.
   - Covers AE8. Present images expose useful alt text and missing images render the fallback without a broken image element.
   - Covers AE9. Empty taxonomy pages and no-result shells use concise Dutch messages.
@@ -466,7 +466,7 @@ flowchart LR
   - A clean checkout can install, validate content, run unit tests, build, and run browser tests through documented commands.
   - Every internal link and local image remains below `/site-recepten/` during the production-prefix run.
   - Direct navigation and refresh succeed for one route in each generated namespace.
-  - Editing, adding, and removing a demonstration recipe changes the generated detail, search, category, and inspiration surfaces after rebuild.
+  - Editing, adding, and removing a family recipe changes the generated detail, search, category, and inspiration surfaces after rebuild.
   - The workflow declares only the permissions required to read contents, write Pages, and request an identity token.
 - **Verification:** The aggregate validation command passes, the workflow matches official Pages requirements, and the README lets a new maintainer add one recipe without editing generated HTML.
 

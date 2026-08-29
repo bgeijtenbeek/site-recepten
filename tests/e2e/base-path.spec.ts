@@ -11,10 +11,11 @@ test('serves the Dutch shell below the project path', async ({ page }) => {
 
 test('keeps direct routes and internal assets below the project path', async ({ page }) => {
   for (const route of [
-    'recepten/kip-kerrie-rijst/',
+    'recepten/spinaziesoep/',
+    'recepten/tagliatelle-met-champignons/',
     'maaltijdtypes/hoofdgerechten/',
     'maaltijdtypes/overig/',
-    'kenmerken/kip/',
+    'kenmerken/vega/',
     'kenmerken/soep/',
   ]) {
     const response = await page.goto(route);
