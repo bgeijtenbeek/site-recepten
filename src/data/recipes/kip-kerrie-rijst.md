@@ -19,4 +19,5 @@ steps:
   - Kook de rijst volgens de aanwijzingen.
   - Bak de kip rondom bruin en voeg paprika toe.
   - Roer de kerrie erdoor en laat alles gaar worden.
+  - Een extra random stap toevoegen is easy?
 ---
