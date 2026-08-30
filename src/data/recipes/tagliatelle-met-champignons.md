@@ -1,6 +1,6 @@
 ---
 title: Tagliatelle met champignons
-description: Romige tagliatelle met champignons, ontbijtspek, lente-ui en gevulde olijven.
+description: Romige tagliatelle met champignons, ontbijtspek, lente-ui en Mon Chou.
 image: ../../assets/recipes/tagliatelle-met-champignons.jpeg
 imageAlt: Een bord tagliatelle met champignons, ontbijtspek en bieslook
 mealType: Hoofdgerechten
@@ -18,7 +18,7 @@ ingredients:
   - { name: slagroom, quantity: "250", unit: ml }
   - { name: Mon Chou, quantity: "200", unit: g }
   - { name: Provençaalse kruiden, quantity: "2", unit: el }
-  - { name: gevulde olijven, quantity: "24" }
+  - { name: olijven, amount: naar smaak }
   - { name: gesnipperde bieslook, quantity: "2", unit: el }
 steps:
   - Kook de tagliatelle beetgaar in ruim kokend water met zout. Maak ondertussen de champignons, lente-uitjes en knoflook schoon. Snijd de champignons in vieren, de lente-uitjes in dunne ringen en snipper de knoflook.
