@@ -17,7 +17,7 @@ Open daarna de URL die Astro in de terminal toont. Handige opdrachten:
 - `npm run check` controleert Astro, TypeScript en alle receptbestanden.
 - `npm run test:unit` test hoeveelheden, zoeken, sorteren en URL's.
 - `npm run build` maakt de statische website in `dist/`.
-- `npm run test:e2e` bouwt met het testpad `/site-recepten/` en test de website in echte browsers.
+- `npm run test:e2e` bouwt de website vanaf `/` en test deze in echte browsers.
 - `npm run validate` voert alle controles achter elkaar uit.
 
 ## Een recept toevoegen
@@ -79,7 +79,7 @@ Ieder recept heeft precies één `mealType` en mag meerdere `kenmerken` hebben. 
 3. Kies bij **Build and deployment** als bron **GitHub Actions**.
 4. De workflow `.github/workflows/deploy.yml` controleert en bouwt de site en publiceert daarna `dist/`.
 
-De workflow haalt het domein en repositorypad rechtstreeks uit GitHub Pages. Daardoor werken interne links zowel op een accountsite als onder een projectpad zoals `/site-recepten/`; de repositorynaam staat niet vast in de broncode.
+De Astro-configuratie gebruikt `https://recepten.famgeijtenbeek.nl` als publiek domein en publiceert alle interne links vanaf `/`. De bestaande GitHub Pages-workflow bouwt en publiceert de statische uitvoer.
 
 Voer voor iedere publicatie bij voorkeur lokaal uit:
 

@@ -263,7 +263,7 @@ flowchart LR
 
 ### Risks & Dependencies
 
-- **Repository identity is not configured yet.** Keep Pages `site` and `base` environment-driven and prove a simulated `/site-recepten/` prefix locally.
+- **The production domain is configured explicitly.** Keep the Pages deployment compatible with root-hosting on the custom domain and verify that setup locally.
 - **Astro 7 is current and still moving.** Commit one lockfile and let automated checks expose future incompatible upgrades.
 - **Static randomization needs JavaScript.** Pre-render a usable subset so delayed or failed enhancement never leaves an empty page.
 - **Quantity parsing can corrupt recipe proportions.** Keep parsing and scaling pure, reject malformed input, and cover fractions and boundary servings before wiring the UI.
@@ -348,8 +348,8 @@ flowchart LR
 - **Test scenarios:**
   - A clean npm install on Node 24 resolves exactly the committed lockfile.
   - A default local build emits static output without a server adapter.
-  - A production-like build under `/site-recepten/` serves the shell and favicon below that prefix.
-- **Verification:** Local development starts, both root and simulated-prefix builds complete, and the base-path smoke test can navigate the generated shell.
+  - A production-like build from `/` serves the shell and favicon from the domain root.
+- **Verification:** Local development starts, the root-hosted build completes, and the browser smoke test can navigate the generated shell.
 
 ### U2. Define validated recipe content
 
@@ -396,7 +396,7 @@ flowchart LR
   - Covers AE4. Every query term and every selected Kenmerk must match.
   - Blank or whitespace-only queries are inactive.
   - Covers AE5. Dutch titles sort predictably with numeric fragments and stable ties.
-  - Root and `/site-recepten/` configurations generate correct recipe and taxonomy links without doubled or missing slashes.
+  - Root-hosted URLs generate correct recipe and taxonomy links without doubled or missing slashes.
 - **Verification:** All domain utilities pass unit tests without starting Astro or a browser.
 
 ### U4. Generate the static responsive experience
@@ -464,7 +464,7 @@ flowchart LR
 - **Patterns to follow:** Astro's `withastro/action` workflow followed by GitHub's `deploy-pages` action.
 - **Test scenarios:**
   - A clean checkout can install, validate content, run unit tests, build, and run browser tests through documented commands.
-  - Every internal link and local image remains below `/site-recepten/` during the production-prefix run.
+  - Every internal link and local image resolves from `/` during the production-like run.
   - Direct navigation and refresh succeed for one route in each generated namespace.
   - Editing, adding, and removing a family recipe changes the generated detail, search, category, and inspiration surfaces after rebuild.
   - The workflow declares only the permissions required to read contents, write Pages, and request an identity token.
@@ -495,7 +495,7 @@ flowchart LR
 - Every requirement R1-R19 is implemented and covered by its traced unit verification.
 - Every acceptance example AE1-AE9 has automated unit, build, or browser evidence.
 - The site remains readable without JavaScript and gains the specified live behaviors after enhancement initializes.
-- The root build and a simulated `/site-recepten/` build contain no broken internal route or local image reference.
+- The root-hosted build contains no broken internal route or local image reference.
 - Mobile and desktop browser checks show no horizontal page scrolling, unreachable control, missing focus indicator, or serving-bound violation.
 - Clean install, Astro checks, unit tests, static build, Playwright tests, and `npm run validate` pass.
 - The GitHub Pages workflow is syntactically valid and uses the official build/upload/deploy flow.

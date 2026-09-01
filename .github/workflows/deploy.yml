@@ -17,9 +17,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      SITE_URL: https://${{ github.repository_owner }}.github.io
-      SITE_BASE: ${{ github.event.repository.name == format('{0}.github.io', github.repository_owner) && '/' || format('/{0}', github.event.repository.name) }}
     steps:
       - name: Haal de broncode op
         uses: actions/checkout@v5
