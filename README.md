@@ -28,6 +28,8 @@ Maak voor ieder recept één Markdown-bestand in `src/data/recipes/`. De bestand
 ---
 title: Pompoensoep
 description: Zachte soep met geroosterde pompoen en tijm.
+image: ../../assets/recipes/pompoensoep.jpg
+imageAlt: Een kom romige pompoensoep met tijm
 mealType: Voorgerechten
 kenmerken: [Vega]
 totalTime: 50
@@ -65,6 +67,8 @@ Zet lokale afbeeldingen in `src/assets/recipes/` en verwijs er vanuit het recept
 image: ../../assets/recipes/pompoensoep.jpg
 imageAlt: Een kom romige pompoensoep met tijm
 ```
+
+Het afbeeldingspad is relatief ten opzichte van het receptbestand in `src/data/recipes/`. Het is een bronbestandpad dat Astro tijdens de build verwerkt en staat los van het publieke domein of URL-basispad. De overstap naar publicatie vanaf `/` verandert dit pad dus niet.
 
 Een afbeelding is optioneel. Zonder `image` toont de website automatisch dezelfde rustige illustratie als tijdelijke vervanging. Voeg bij een echte afbeelding altijd een korte, beschrijvende `imageAlt` toe. Astro maakt bij het bouwen passende formaten voor verschillende schermbreedtes.
 
