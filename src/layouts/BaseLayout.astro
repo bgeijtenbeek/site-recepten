@@ -7,7 +7,7 @@ interface Props {
   description?: string;
 }
 
-const siteName = 'Fam. Geijtenbeek - Recepten';
+const siteName = 'DeGoat - Recepten';
 const {
   title = siteName,
   description = 'Een compacte verzameling van onze favoriete familierecepten.',
@@ -46,7 +46,7 @@ const faviconUrl = withBase('favicon.svg', import.meta.env.BASE_URL);
       <slot />
     </main>
     <footer class="site-footer">
-      <div class="page-shell">Met zorg verzameld voor familie en vrienden.</div>
+      <div class="page-shell"><a href="https://degoat.nl">Onderdeel van degoat.nl</a></div>
     </footer>
   </body>
 </html>

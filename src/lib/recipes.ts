@@ -22,17 +22,3 @@ export function toRecipeSummary(entry: CollectionEntry<'recipes'>): RecipeSummar
     imageAlt: entry.data.imageAlt,
   };
 }
-
-export function recipesForMealType<T extends { mealType: string }>(
-  recipes: ReadonlyArray<T>,
-  mealType: string,
-): T[] {
-  return recipes.filter((recipe) => recipe.mealType === mealType);
-}
-
-export function recipesForKenmerk<T extends { kenmerken: ReadonlyArray<string> }>(
-  recipes: ReadonlyArray<T>,
-  kenmerk: string,
-): T[] {
-  return recipes.filter((recipe) => recipe.kenmerken.includes(kenmerk));
-}

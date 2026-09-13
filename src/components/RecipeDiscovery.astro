@@ -1,5 +1,5 @@
 ---
-import { KENMERKEN } from '../data/taxonomies';
+import { KENMERKEN, MEAL_TYPES } from '../data/taxonomies';
 import type { RecipeSummary } from '../lib/recipes';
 import { normalizeDutchText } from '../lib/search';
 import { selectInspiration } from '../lib/random';
@@ -23,9 +23,28 @@ const initialIds = new Set(selectInspiration(recipes, inspirationLimit, () => 0.
     </div>
   </div>
 
-  <slot name="categories" />
+  <div class="filter-groups" data-enhancement-controls hidden>
+    <fieldset class="filter-group">
+      <legend>Filter op moment</legend>
+      <p class="filter-hint">Kies het moment waarvoor je een recept zoekt.</p>
+      <div class="filter-chips">
+        <span class="filter-chip-wrap">
+          <label class="filter-chip">
+            <input type="radio" name="moment" value="" checked />
+            <span>Alle momenten</span>
+          </label>
+        </span>
+        {MEAL_TYPES.map((moment) => (
+          <span class="filter-chip-wrap">
+            <label class="filter-chip">
+              <input type="radio" name="moment" value={moment.label} />
+              <span>{moment.label}</span>
+            </label>
+          </span>
+        ))}
+      </div>
+    </fieldset>
 
-  <div data-enhancement-controls hidden>
     <fieldset class="filter-group">
       <legend>Filter op kenmerken</legend>
       <p class="filter-hint">Kies één of meer kenmerken; een recept moet aan alles voldoen.</p>
@@ -78,8 +97,9 @@ const initialIds = new Set(selectInspiration(recipes, inspirationLimit, () => 0.
     connectedCallback() {
       const search = this.querySelector<HTMLInputElement>('input[type="search"]');
       const controls = [...this.querySelectorAll<HTMLElement>('[data-enhancement-controls]')];
-      const checks = [...this.querySelectorAll<HTMLInputElement>('input[name="kenmerk"]')];
-      const checkRecords = checks.map((input) => ({ input, value: normalizeDutchText(input.value) }));
+      const moments = [...this.querySelectorAll<HTMLInputElement>('input[name="moment"]')];
+      const kenmerken = [...this.querySelectorAll<HTMLInputElement>('input[name="kenmerk"]')];
+      const kenmerkRecords = kenmerken.map((input) => ({ input, value: normalizeDutchText(input.value) }));
       const items = [...this.querySelectorAll<HTMLElement>('[data-recipe-id]')];
       const grid = this.querySelector<HTMLElement>('[data-grid]');
       const status = this.querySelector<HTMLElement>('[data-status]');
@@ -87,12 +107,13 @@ const initialIds = new Set(selectInspiration(recipes, inspirationLimit, () => 0.
       const clear = this.querySelector<HTMLButtonElement>('[data-clear]');
       const title = this.querySelector<HTMLElement>('[data-section-title]');
       const kicker = this.querySelector<HTMLElement>('[data-section-kicker]');
-      if (!search || controls.length === 0 || !grid || !status || !empty || !clear || !title || !kicker) return;
+      if (!search || controls.length === 0 || moments.length === 0 || !grid || !status || !empty || !clear || !title || !kicker) return;
       for (const control of controls) control.hidden = false;
 
       const records = items.map((element) => ({
         element,
         mealType: element.dataset.mealType ?? '',
+        normalizedMealType: normalizeDutchText(element.dataset.mealType ?? ''),
         searchableText: element.dataset.search ?? '',
         kenmerken: new Set((element.dataset.kenmerken ?? '').split('|').filter(Boolean)),
       }));
@@ -107,11 +128,19 @@ const initialIds = new Set(selectInspiration(recipes, inspirationLimit, () => 0.
 
       const render = () => {
         const terms = queryTerms(search.value);
-        const selected = checkRecords.filter(({ input }) => input.checked).map(({ value }) => value);
-        const active = terms.length > 0 || selected.length > 0;
+        const selectedMoment = normalizeDutchText(moments.find((input) => input.checked)?.value ?? '');
+        const selectedKenmerken = kenmerkRecords.filter(({ input }) => input.checked).map(({ value }) => value);
+        const active = terms.length > 0 || selectedMoment.length > 0 || selectedKenmerken.length > 0;
         const visible = active
           ? records
-              .filter(({ searchableText, kenmerken }) => matchesDiscovery(searchableText, kenmerken, terms, selected))
+              .filter(({ searchableText, normalizedMealType, kenmerken }) => matchesDiscovery(
+                searchableText,
+                normalizedMealType,
+                kenmerken,
+                terms,
+                selectedMoment,
+                selectedKenmerken,
+              ))
               .map(({ element }) => element)
           : inspiration;
         const visibleSet = new Set(visible);
@@ -129,10 +158,12 @@ const initialIds = new Set(selectInspiration(recipes, inspirationLimit, () => 0.
       };
 
       search.addEventListener('input', render);
-      for (const check of checks) check.addEventListener('change', render);
+      for (const moment of moments) moment.addEventListener('change', render);
+      for (const kenmerk of kenmerken) kenmerk.addEventListener('change', render);
       clear.addEventListener('click', () => {
         search.value = '';
-        for (const check of checks) check.checked = false;
+        moments[0].checked = true;
+        for (const kenmerk of kenmerken) kenmerk.checked = false;
         render();
         search.focus();
       });

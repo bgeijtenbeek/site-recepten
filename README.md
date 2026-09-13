@@ -1,6 +1,6 @@
-# Fam. Geijtenbeek - Recepten
+# DeGoat - Recepten
 
-Een compacte, Nederlandstalige receptenwebsite voor de familie. Astro bouwt alle recepten, categorieën en afbeeldingen vooraf tot een volledig statische website. Er is geen CMS, database of account nodig.
+Een compacte, Nederlandstalige receptenwebsite voor de familie. Astro bouwt alle recepten en afbeeldingen vooraf tot een volledig statische website. Er is geen CMS, database of account nodig.
 
 ## Lokaal starten
 
@@ -72,9 +72,11 @@ Het afbeeldingspad is relatief ten opzichte van het receptbestand in `src/data/r
 
 Een afbeelding is optioneel. Zonder `image` toont de website automatisch dezelfde rustige illustratie als tijdelijke vervanging. Voeg bij een echte afbeelding altijd een korte, beschrijvende `imageAlt` toe. Astro maakt bij het bouwen passende formaten voor verschillende schermbreedtes.
 
-## Categorieën beheren
+## Filters beheren
 
-Ieder recept heeft precies één `mealType` en mag meerdere `kenmerken` hebben. De toegestane waarden en URL-slugs staan centraal in `src/data/taxonomies.ts`. Voeg een nieuwe categorie daar één keer toe; Astro maakt de categoriepagina vervolgens automatisch. Voer daarna `npm run check` uit om alle recepten te controleren.
+Ieder recept heeft precies één `mealType` en mag meerdere `kenmerken` hebben. Op de homepage wordt `mealType` als het filter **Moment** getoond; `kenmerken` vormt het tweede filter. Een zoekterm, het gekozen moment en alle gekozen kenmerken worden met elkaar gecombineerd.
+
+De toegestane waarden staan centraal in `src/data/taxonomies.ts`. Voeg een nieuw moment of kenmerk daar één keer toe; het verschijnt dan automatisch in het bijbehorende filter. Er zijn geen losse categoriepagina's. Voer daarna `npm run check` uit om alle recepten te controleren.
 
 ## Publiceren op GitHub Pages
 
@@ -83,7 +85,7 @@ Ieder recept heeft precies één `mealType` en mag meerdere `kenmerken` hebben. 
 3. Kies bij **Build and deployment** als bron **GitHub Actions**.
 4. De workflow `.github/workflows/deploy.yml` controleert en bouwt de site en publiceert daarna `dist/`.
 
-De Astro-configuratie gebruikt `https://recepten.famgeijtenbeek.nl` als publiek domein en publiceert alle interne links vanaf `/`. De bestaande GitHub Pages-workflow bouwt en publiceert de statische uitvoer.
+De Astro-configuratie gebruikt `https://recepten.degoat.nl` als publiek domein en publiceert alle interne links vanaf `/`. De bestaande GitHub Pages-workflow bouwt en publiceert de statische uitvoer.
 
 Voer voor iedere publicatie bij voorkeur lokaal uit:
 

@@ -30,11 +30,3 @@ export function withBase(path: string, base = '/'): string {
 export function recipeUrl(id: string, base = '/'): string {
   return withBase(`recepten/${validateSegment(id)}/`, base);
 }
-
-export function mealTypeUrl(slug: string, base = '/'): string {
-  return withBase(`maaltijdtypes/${validateSegment(slug)}/`, base);
-}
-
-export function kenmerkUrl(slug: string, base = '/'): string {
-  return withBase(`kenmerken/${validateSegment(slug)}/`, base);
-}

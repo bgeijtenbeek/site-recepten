@@ -28,6 +28,21 @@ test('toont de kenmerken op volgorde en filtert het echte recept', async ({ page
   await expect(page.getByText('1 recept gevonden')).toBeVisible();
 });
 
+test('combineert een moment met alle gekozen kenmerken', async ({ page }) => {
+  const momentOrder = await page.locator('input[name="moment"]').evaluateAll((items) =>
+    items.map((item) => (item as HTMLInputElement).value),
+  );
+  expect(momentOrder).toEqual(['', 'Ontbijt/Lunch', 'Voorgerechten', 'Hoofdgerechten', 'Desserts', 'Overig']);
+
+  await page.getByRole('radio', { name: 'Hoofdgerechten' }).check();
+  await page.getByRole('checkbox', { name: 'Vega' }).check();
+  await expect(page.getByText('1 recept gevonden')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Spinaziesoep' })).toBeVisible();
+
+  await page.getByRole('radio', { name: 'Voorgerechten' }).check();
+  await expect(page.getByRole('heading', { name: 'Geen recepten gevonden' })).toBeVisible();
+});
+
 test('zoekt live in ingrediënten en wist terug naar dezelfde inspiratie', async ({ page }) => {
   const initialIds = await page.locator('[data-recipe-id]:visible').evaluateAll((items) => items.map((item) => item.getAttribute('data-recipe-id')));
   await page.getByLabel('Zoek een recept').fill('croutons');

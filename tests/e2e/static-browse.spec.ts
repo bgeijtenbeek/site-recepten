@@ -10,25 +10,7 @@ test.describe('statische ervaring zonder JavaScript', () => {
     await expect(page.getByText('Zoek in onze favorieten, filter op wat er in huis is of laat je verrassen.')).toHaveCount(0);
     await expect(page.getByText('Voor aan onze tafel')).toHaveCount(0);
     await expect(page.locator('[data-recipe-id]:visible')).toHaveCount(2);
-
-    const kenmerken = page.getByRole('navigation', { name: 'Blader op kenmerken' });
-    await expect(kenmerken.locator('details')).not.toHaveAttribute('open', '');
-    await kenmerken.locator('summary').click();
-    await kenmerken.getByRole('link', { name: 'Soep', exact: true }).click();
-    await expect(page.getByRole('heading', { name: 'Soep', level: 1 })).toBeVisible();
-
-    await page.goto('./');
-    const maaltijdtypes = page.getByRole('navigation', { name: 'Maaltijdtypes' });
-    await maaltijdtypes.locator('summary').click();
-    await expect(maaltijdtypes.getByRole('link', { name: 'Overig', exact: true })).toBeVisible();
-    await expect(maaltijdtypes.getByRole('link', { name: 'Bijgerechten', exact: true })).toHaveCount(0);
-    await expect(maaltijdtypes.getByRole('link', { name: 'Snacks', exact: true })).toHaveCount(0);
-    await maaltijdtypes.getByRole('link', { name: 'Hoofdgerechten' }).click();
-    await expect(page.getByRole('heading', { name: 'Hoofdgerechten', level: 1 })).toBeVisible();
-    await expect(page.locator('.recipe-card h2')).toHaveCount(0);
-    await expect(page.locator('.recipe-card h3')).not.toHaveCount(0);
-    const titles = await page.locator('.card-title').allTextContents();
-    expect(titles).toEqual([...titles].sort((a, b) => a.localeCompare(b, 'nl-NL')));
+    await expect(page.getByRole('navigation', { name: /Blader op|Maaltijdtypes/ })).toHaveCount(0);
 
     await page.getByRole('link', { name: 'Spinaziesoep' }).click();
     await expect(page.getByText('Totale kooktijd', { exact: true })).toBeVisible();
@@ -50,16 +32,26 @@ test.describe('statische ervaring zonder JavaScript', () => {
 for (const width of [360, 768, 1280]) {
   test(`heeft geen horizontale overloop bij ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
-    for (const route of ['./', 'recepten/spinaziesoep/', 'kenmerken/vega/']) {
+    for (const route of ['./', 'recepten/spinaziesoep/']) {
       await page.goto(route);
       const overflows = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
       expect(overflows).toBe(false);
 
       if (route === './' && width === 1280) {
-        const contentWidths = await page.locator('.search-field, .homepage-taxonomies').evaluateAll((items) =>
+        const contentWidths = await page.locator('.search-field, .filter-groups').evaluateAll((items) =>
           items.map((item) => item.getBoundingClientRect().width),
         );
         expect(Math.abs(contentWidths[0] - contentWidths[1])).toBeLessThan(1);
+        const filterBoxes = await page.locator('.filter-group').evaluateAll((items) =>
+          items.map((item) => {
+            const box = item.getBoundingClientRect();
+            return { top: box.top, bottom: box.bottom, width: box.width };
+          }),
+        );
+        expect(filterBoxes).toHaveLength(2);
+        expect(filterBoxes[1].top).toBeGreaterThan(filterBoxes[0].bottom);
+        expect(Math.abs(filterBoxes[0].width - contentWidths[0])).toBeLessThan(1);
+        expect(Math.abs(filterBoxes[1].width - contentWidths[0])).toBeLessThan(1);
         const columns = await page.locator('[data-grid]').evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(' ').length);
         expect(columns).toBe(3);
         await expect(page.locator('.recipe-card').first().locator('.card-meta dd')).toHaveCount(1);
